@@ -5,7 +5,7 @@ namespace netvod\action;
 use Auth;
 use Exception;
 
-class Register extends Action
+class RegisterAction extends Action
 {
 
     public function execute(): string
