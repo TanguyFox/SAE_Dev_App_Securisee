@@ -6,6 +6,7 @@ use Exception;
 use netvod\action\DefaultAction;
 use netvod\action\LogoutAction;
 use netvod\action\SignInAction;
+use netvod\action\RegisterAction;
 
 class Dispatcher
 {
@@ -21,21 +22,12 @@ class Dispatcher
 
     public function run(): void
     {
-        switch ($this->action) {
-            case 'signin':
-                $action = new SigninAction();
-                $action->execute();
-                break;
-            case 'register':
-                $action = new RegisterAction();
-                break;
-            case 'logout':
-                $action = new LogoutAction();
-                break;
-            default:
-                $action = new DefaultAction();
-                break;
-        }
+        $action = match ($this->action) {
+            'signin' => new SigninAction(),
+            'register' => new RegisterAction(),
+            'logout' => new LogoutAction(),
+            default => new DefaultAction(),
+        };
         try {
             $this->renderPage($action->execute());
         } catch (Exception $e) {
