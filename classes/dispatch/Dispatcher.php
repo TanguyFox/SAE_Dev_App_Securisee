@@ -5,35 +5,29 @@ namespace netvod\dispatch;
 use Exception;
 use netvod\action\DefaultAction;
 use netvod\action\LogoutAction;
+use netvod\action\SignInAction;
+use netvod\action\RegisterAction;
 
 class Dispatcher
 {
     private string $action;
 
     public function __construct(string $action){
-        if(isset($_SESSION['user'])) {
+        if(isset($_SESSION['user']) or in_array($action, array(null,"signin","register"))) {
             $this->action = $action;
         }else{
-            $this->action = 'signin';
+            $this->action = "signin";
         }
     }
 
     public function run(): void
     {
-        switch ($this->action) {
-            case 'signin':
-                $action = new SigninAction();
-                break;
-            case 'register':
-                $action = new RegisterAction();
-                break;
-            case 'logout':
-                $action = new LogoutAction();
-                break;
-            default:
-                $action = new DefaultAction();
-                break;
-        }
+        $action = match ($this->action) {
+            'signin' => new SigninAction(),
+            'register' => new RegisterAction(),
+            'logout' => new LogoutAction(),
+            default => new DefaultAction(),
+        };
         try {
             $this->renderPage($action->execute());
         } catch (Exception $e) {

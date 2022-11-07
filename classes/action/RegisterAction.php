@@ -2,10 +2,11 @@
 
 namespace netvod\action;
 
-use Auth;
 use Exception;
+use netvod\auth\Auth;
+use netvod\exceptions\AuthException;
 
-class Register extends Action
+class RegisterAction extends Action
 {
 
     public function execute(): string
@@ -23,6 +24,10 @@ class Register extends Action
                             <td>Mot de passe</td>
                             <td><input type='password' name='password'/></td>
                         </tr>
+                        <tr>
+                            <td>Veuillez entrer de nouveau le mot de passe</td>
+                            <td><input type='password' name='password2'/></td>
+                        </tr>
                     </table>
                     <a href='?action=signin'>Se connecter</a>
                     <input type='submit' value="S'inscrire"' />
@@ -32,17 +37,21 @@ class Register extends Action
                 </form>
 HTML;
         else
-            try {
-                $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-                $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
-                Auth::register($email, $password);
-            } catch (Exception $e) {
-                return <<<HTML
+
+        try {
+            if ($_POST['password'] !== $_POST['password2'])
+                throw new AuthException("Les mots de passe ne correspondent pas");
+            $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+            $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
+            Auth::register($email, $password);
+        } catch (Exception $e) {
+            return <<<HTML
                         <h2 style="color: red">Erreur lors de l'inscription</h2>
+                        <h3 style="color: red;">{$e->getMessage()}</h3>
                         <a href='?'>Accueil</a>
                         <a href="?action=register">Réessayer</a> 
 HTML;
-            }
+        }
         return <<<HTML
                     <h2>Utilisateur ajouté</h2>
                     <a href="?action=signin">Se connecter</a>
