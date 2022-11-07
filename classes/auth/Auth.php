@@ -1,12 +1,19 @@
 <?php
 
 namespace netvod\auth;
+use netvod\db\ConnexionFactory;
+use netvod\exceptions\AuthException;
+use netvod\user\User;
+
 class Auth
 {
 
-    public static function authenticate(string $email, string $pwd)
+    /**
+     * @throws AuthException
+     */
+    public static function authenticate(string $email, string $pwd): void
     {
-        $db = \iutnc\deefy\db\ConnexionFactory::makeConnexion();
+        $db = ConnexionFactory::makeConnection();
 
         $st = $db->prepare( "SELECT * FROM utilisateur WHERE email = ?");
         $st->execute([$email]);
@@ -20,8 +27,12 @@ class Auth
         }
     }
 
-    public static function loadprofile(string $email){
-        $db = \iutnc\deefy\db\ConnexionFactory::makeConnexion();
+    /**
+     * @throws AuthException
+     */
+    public static function loadprofile(string $email): void
+    {
+        $db = ConnexionFactory::makeConnection();
 
         $st = $db->prepare( "SELECT * FROM utilisateur WHERE email = ?");
         $st->execute([$email]);
@@ -29,7 +40,7 @@ class Auth
         if (!$u) {
             throw new AuthException(" Identifiants invalides");
         }
-        $user = new \iutnc\deefy\user\User($email, $u['passwd'],$u['role']);
+        $user = new User($u['nom'],$u['prenom'],$email, $u['passwd'],$u['role']);
         $_SESSION['user']=serialize($user);
     }
 
