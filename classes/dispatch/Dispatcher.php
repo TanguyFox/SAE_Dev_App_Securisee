@@ -3,6 +3,7 @@
 namespace netvod\dispatch;
 
 use Exception;
+use netvod\action\DefaultAction;
 use netvod\action\LogoutAction;
 
 class Dispatcher
@@ -23,8 +24,8 @@ class Dispatcher
             case 'signin':
                 $action = new SigninAction();
                 break;
-            case 'add-user':
-                $action = new AddUserAction();
+            case 'register':
+                $action = new RegisterAction();
                 break;
             case 'logout':
                 $action = new LogoutAction();
