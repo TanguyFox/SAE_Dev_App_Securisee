@@ -27,7 +27,10 @@ class SignInAction extends Action
                 $utilisateur = unserialize($_SESSION['utilisateur']);
                 $html .= "Bienvenue sur NetVod {$utilisateur->prenom} !";
                 $html .= "<a href='?action=acess-profile'> Choississez votre profil</a><ul>";
-                foreach ($utilisateur->profils as $profil) {
+                if(empty($utilisateur->profiles)){
+                    $html .= "Vous n'avez pas de profil pour le moment... Créez-en un !";
+                }
+                foreach ($utilisateur->profiles as $profil) {
                     $html = "<li>$profil->nom</li>";
                 }
                 $html .= "</ul>";
