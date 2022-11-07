@@ -1,8 +1,8 @@
 <?php
 
 
-$loader = require 'src/vendor/autoload.php';
-$loader->addPsr4('iutnc\\deefy\\', 'src\classes');
+$loader = require 'vendor/autoload.php';
+$loader->addPsr4('netvod\\', 'classes');
 
 
 use netvod\dispatch\Dispatcher;
