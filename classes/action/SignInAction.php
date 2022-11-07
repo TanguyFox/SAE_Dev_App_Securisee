@@ -19,17 +19,22 @@ class SignInAction extends Action
                     </form>
                     END;
         } else {
-            $email = filter_var($_POST['email'],FILTER_VALIDATE_EMAIL);
-            $mdp = filter_var($_POST['passw'], FILTER_SANITIZE_SPECIAL_CHARS);
-            Auth::authenticate($email,$mdp);
-            Auth::loadprofile($email);
-            $utilisateur = unserialize($_SESSION['utilisateur']);
-            $html .= "Bienvenue sur NetVod {$utilisateur->prenom} !";
-            $html .= "<a href='?action=acess-profile'> Choississez votre profil</a><ul>";
-            foreach ($utilisateur->profils as $profil){
-                $html = "<li>$profil->nom</li>";
+            try {
+                $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+                $mdp = filter_var($_POST['passw'], FILTER_SANITIZE_SPECIAL_CHARS);
+                Auth::authenticate($email, $mdp);
+                Auth::loadprofile($email);
+                $utilisateur = unserialize($_SESSION['utilisateur']);
+                $html .= "Bienvenue sur NetVod {$utilisateur->prenom} !";
+                $html .= "<a href='?action=acess-profile'> Choississez votre profil</a><ul>";
+                foreach ($utilisateur->profils as $profil) {
+                    $html = "<li>$profil->nom</li>";
+                }
+                $html .= "</ul>";
+            }catch(\netvod\exceptions\AuthException $e) {
+                $html = "Echec d'authentification : " . $e->getMessage();
             }
-            $html.= "</ul>";
         }
+        return $html;
     }
 }

@@ -5,6 +5,7 @@ namespace netvod\dispatch;
 use Exception;
 use netvod\action\DefaultAction;
 use netvod\action\LogoutAction;
+use netvod\action\SignInAction;
 
 class Dispatcher
 {
@@ -23,6 +24,7 @@ class Dispatcher
         switch ($this->action) {
             case 'signin':
                 $action = new SigninAction();
+                $action->execute();
                 break;
             case 'register':
                 $action = new RegisterAction();

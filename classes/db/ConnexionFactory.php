@@ -2,9 +2,9 @@
 
 namespace netvod\db;
 use PDO;
-ConnectionFactory::setConfig( 'db.config.ini' );
+ConnexionFactory::setConfig( 'db.config.ini' );
 
-class ConnectionFactory{
+class ConnexionFactory{
     public static $db = null;
     public static $config =[];
 
@@ -12,7 +12,8 @@ class ConnectionFactory{
         self::$config = parse_ini_file($iniFile);
     }
 
-    public static function makeConnection(){
+    public static function makeConnection(): ?PDO
+    {
         if(self::$db === null){
             $dsn = self::$config['driver'].
                 ':host='.self::$config['host'].

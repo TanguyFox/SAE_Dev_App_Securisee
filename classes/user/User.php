@@ -1,5 +1,5 @@
 <?php
-
+namespace netvod\user;
 class User
 {
     private string $nom;
