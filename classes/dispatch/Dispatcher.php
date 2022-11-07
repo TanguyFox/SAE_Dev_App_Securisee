@@ -13,10 +13,10 @@ class Dispatcher
     private string $action;
 
     public function __construct(string $action){
-        if(isset($_SESSION['user'])) {
+        if(isset($_SESSION['user']) or in_array($action, array(null,"signin","register"))) {
             $this->action = $action;
         }else{
-            $this->action = 'signin';
+            $this->action = "signin";
         }
     }
 
