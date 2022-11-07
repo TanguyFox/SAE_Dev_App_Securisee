@@ -33,7 +33,9 @@ class Register extends Action
 HTML;
         else
             try {
-                Auth::register($_POST['email'], $_POST['password']);
+                $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+                $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
+                Auth::register($email, $password);
             } catch (Exception $e) {
                 return <<<HTML
                         <h2 style="color: red">Erreur lors de l'inscription</h2>
