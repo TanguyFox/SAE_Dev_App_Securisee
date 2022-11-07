@@ -1,2 +1,2 @@
 # SAE_Dev_App_Securisee
-### Réalisé par CARLIER Maxime, PELLIZZARI Théo, ARNAUD Elian et RENARD Tanguy
+### Réalisé par ARNAUD Elian, BRESSON Jules, CARLIER Maxime, PELLIZZARI Théo et RENARD Tanguy
