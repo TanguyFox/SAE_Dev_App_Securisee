@@ -2,8 +2,8 @@
 
 namespace netvod\action;
 
-use Auth;
 use Exception;
+use netvod\auth\Auth;
 use netvod\exceptions\AuthException;
 
 class RegisterAction extends Action
@@ -47,6 +47,7 @@ HTML;
         } catch (Exception $e) {
             return <<<HTML
                         <h2 style="color: red">Erreur lors de l'inscription</h2>
+                        <h3 style="color: red;">{$e->getMessage()}</h3>
                         <a href='?'>Accueil</a>
                         <a href="?action=register">Réessayer</a> 
 HTML;

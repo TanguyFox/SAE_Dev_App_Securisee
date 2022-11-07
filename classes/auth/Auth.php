@@ -44,4 +44,23 @@ class Auth
         $_SESSION['user']=serialize($user);
     }
 
+    /**
+     * @throws AuthException
+     */
+    public static function register(string $email, string $password): void
+    {
+        if (strlen($password) < 10) {
+            throw new AuthException("Mot de passe trop court");
+        }
+        $db = ConnexionFactory::makeConnection();
+        $st = $db->prepare( "SELECT * FROM utilisateur WHERE email = ?");
+        $st->execute([$email]);
+        $row = $st->fetch();
+        if ($row != null) {
+            throw new AuthException("L'utilisateur existe déjà");
+        }
+        $st = $db->prepare("INSERT INTO utilisateur (email, passwd) VALUES (?,?)");
+        $st->execute([$email, password_hash($password, PASSWORD_DEFAULT)]);
+    }
+
 }
