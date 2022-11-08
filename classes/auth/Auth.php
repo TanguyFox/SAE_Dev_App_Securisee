@@ -11,20 +11,20 @@ class Auth
     /**
      * @throws AuthException
      */
-    public static function authenticate(string $email, string $pwd): void
+    public static function authenticate(string $email, string $pwd): bool
     {
         $db = ConnexionFactory::makeConnection();
 
         $st = $db->prepare( "SELECT * FROM utilisateur WHERE email = ?");
         $st->execute([$email]);
         $u = $st->fetch(\PDO::FETCH_ASSOC);
-        if (!$u) {
-            throw new AuthException(" Cet utilisateur n'existe pas");
+        $hash = $u['password'];
+        if (!$u or !password_verify($pwd, $hash)) {
+            throw new AuthException("Mot de passe ou email incorrect.");
         }
-        $hash = $u['passwd'];
-        if (!password_verify($pwd, $hash)) {
-            throw new AuthException("Mot de passe incorrecte");
-        }
+        $user = new User($u['nom'],$u['prenom'],$email, $u['password']);
+        $_SESSION['user']=serialize($user);
+        return true;
     }
 
     /**
@@ -32,16 +32,15 @@ class Auth
      */
     public static function loadprofile(string $email): void
     {
+        //Cette fonction sera modifiée prochainement pour charger les profils
         $db = ConnexionFactory::makeConnection();
 
         $st = $db->prepare( "SELECT * FROM utilisateur WHERE email = ?");
         $st->execute([$email]);
         $u = $st->fetch(\PDO::FETCH_ASSOC);
         if (!$u) {
-            throw new AuthException(" Identifiants invalides");
+            throw new AuthException("Identifiants invalides.");
         }
-        $user = new User($u['nom'],$u['prenom'],$email, $u['passwd'],$u['role']);
-        $_SESSION['user']=serialize($user);
     }
 
     /**
@@ -59,7 +58,7 @@ class Auth
         if ($row != null) {
             throw new AuthException("L'utilisateur existe déjà");
         }
-        $st = $db->prepare("INSERT INTO utilisateur (email, passwd) VALUES (?,?)");
+        $st = $db->prepare("INSERT INTO utilisateur (email, password) VALUES (?,?)");
         $st->execute([$email, password_hash($password, PASSWORD_DEFAULT)]);
     }
 
