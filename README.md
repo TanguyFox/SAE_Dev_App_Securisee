@@ -8,7 +8,7 @@
 | 2. Inscription sur la plateforme                                                                              | Elian       | ok       |
 | 3. Affichage du catalogue de séries                                                                           | Maxime,Theo | ok       |
 | 4. Affichage détaillé d’une série et de la liste de ses épisodes                                              | Maxime,Theo | ok       |
-| 5. Affichage/visionnage d’un épisode d’une série                                                              | Maxime      | en cours |
+| 5. Affichage/visionnage d’un épisode d’une série                                                              | Maxime      | ok       |
 | 6. Ajout d’une série dans la liste de préférence d’un utilisateur                                             | Elian       | en cours |
 | 7. Page d’accueil d’un utilisateur : afficher ses séries préférées                                            | Elian       | en cours |
 | 8. Lors du visionnage d’un épisode, ajouter automatiquement la série à la liste « en cours » de l’utilisateur | ?           | Non      |

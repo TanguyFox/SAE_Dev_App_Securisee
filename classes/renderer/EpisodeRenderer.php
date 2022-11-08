@@ -37,8 +37,11 @@ class EpisodeRenderer implements Renderer
         return '
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">'.$this->episode->titre.' <small> '.$this->episode->annee.' </small></h5>
+            <h5 class="card-title">'.$this->episode->titre.' <small>Duree: '.$this->episode->duree.' </small></h5>
             <p class="card-text">'.$this->episode->resume.'</p>
+            <video style="width: 50rem;" controls>
+              <source src="video/'.$this->episode->file.'" type="video/'.pathinfo($this->episode->file)['extension'].'">
+            </video>
           </div>
         </div>
         ';
