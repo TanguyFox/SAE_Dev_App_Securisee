@@ -4,7 +4,7 @@ namespace netvod\user;
 
 use netvod\exceptions\InvalidPropertyNameException;
 
-class Profil
+class Account
 {
     private string $avatar;
     private string $nom;
