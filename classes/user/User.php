@@ -12,7 +12,7 @@ class User
     private string $password;
     private array $accounts;
 
-    public function __construct(string $n, string $p, string $mail, string $pwd, array $profile=[]){
+    public function __construct(string $n, string $p, string $mail, string $pwd, array $account=[]){
         $this->nom=$n ?? "";
         $this->prenom=$p ?? "";
         $this->email=$mail;
