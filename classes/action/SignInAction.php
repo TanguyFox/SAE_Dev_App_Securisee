@@ -23,8 +23,7 @@ class SignInAction extends Action
                 $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
                 $mdp = filter_var($_POST['passw'], FILTER_SANITIZE_SPECIAL_CHARS);
                 Auth::authenticate($email, $mdp);
-                Auth::loadprofile($email);
-                $utilisateur = unserialize($_SESSION['utilisateur']);
+                $utilisateur = unserialize($_SESSION['user']);
                 $html .= "Bienvenue sur NetVod {$utilisateur->prenom} !";
                 $html .= "<a href='?action=acess-profile'> Choississez votre profil</a><ul>";
                 if(empty($utilisateur->profiles)){

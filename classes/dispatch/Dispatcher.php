@@ -3,6 +3,7 @@
 namespace netvod\dispatch;
 
 use Exception;
+use netvod\action\AccueilCatalogueAction;
 use netvod\action\DefaultAction;
 use netvod\action\LogoutAction;
 use netvod\action\SignInAction;
@@ -26,6 +27,7 @@ class Dispatcher
             'signin' => new SigninAction(),
             'register' => new RegisterAction(),
             'logout' => new LogoutAction(),
+            'AccueilCatalogueAction' => new AccueilCatalogueAction(),
             default => new DefaultAction(),
         };
         try {
