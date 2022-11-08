@@ -16,13 +16,14 @@ class Episode
     private string $file;
     private int $serie_id;
 
-    public function __construct(int $id,  $numero, string $titre, string $resume, int $duree, int $serie_id){
+    public function __construct(int $id, int $numero, string $titre, string $resume, int $duree, string $file, int $serie_id)
+    {
         $this->id = $id;
         $this->numero = $numero;
         $this->titre = $titre;
         $this->resume = $resume;
         $this->duree = $duree;
-        $this->file =
+        $this->file = $file;
         $this->serie_id = $serie_id;
     }
 

@@ -17,7 +17,7 @@ class Serie
     public function __construct(string $titre, string $description="", string $image=null, int $annee=null, string $date_ajout=null){
         $this->titre = $titre;
         $this->description = $description;
-        $this->image = $image ?? "https://img.icons8.com/fluency/512/laptop-play-video.png";
+        $this->image = ($image =="") ? "https://img.icons8.com/fluency/512/laptop-play-video.png":$image;
         $this->annee = $annee ?? date("Y");
         $this->date_ajout = $date_ajout ?? date("Y-m-d");
     }

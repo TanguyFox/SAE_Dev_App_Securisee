@@ -11,8 +11,8 @@ class User
     private array $profiles;
 
     public function __construct(string $n, string $p, string $mail, string $pwd, array $profile=[]){
-        $this->nom=$n;
-        $this->prenom=$p;
+        $this->nom=$n ?? "";
+        $this->prenom=$p ?? "";
         $this->email=$mail;
         $this->password=$pwd;
         $this->profiles=$profile;

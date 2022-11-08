@@ -16,12 +16,13 @@ class SerieRenderer implements Renderer
 
     private function renderCompact(): string{
         return '
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 18rem; margin: 1rem;">
           <img class="card-img-top" src="'.$this->serie->image.'" alt="Serie\'s image">
-          <div class="card-body">
+          <div class="card-body d-flex flex-column">
             <h5 class="card-title">'.$this->serie->titre.' <small> '.$this->serie->annee.' </small></h5>
             <p class="card-text">'.$this->serie->description.'</p>
-            <a href="#" class="btn btn-primary">Details</a>
+            <p><small>'.$this->serie->date_ajout.'</small></p>
+            <a href="#" class="align-self-end btn btn-lg btn-block btn-primary">Details</a>
           </div>
         </div>
         ';
@@ -29,7 +30,7 @@ class SerieRenderer implements Renderer
 
     private function renderLong(): string{
         //TODO: implement this method
-        //Faire le renderer long des episodes avant
+        //Utiliser le renderer des episodes
     }
 
     public function render(int $selector): string
