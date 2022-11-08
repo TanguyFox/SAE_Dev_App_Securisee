@@ -28,8 +28,15 @@ class RegisterAction extends Action
                             <td>Veuillez entrer de nouveau le mot de passe</td>
                             <td><input type='password' name='password2'/></td>
                         </tr>
+                        <tr>
+                            <td>Nom</td>
+                            <td><input type='text' name='nom'/></td>
+                        </tr>
+                        <tr>
+                            <td>Prénom</td>
+                            <td><input type='text' name='prenom'/></td>
+                        </tr>
                     </table>
-                    <a href='?action=signin'>Se connecter</a>
                     <input type='submit' value="S'inscrire"' />
                     <div>
                     <a href="?">Accueil</a>
@@ -43,7 +50,9 @@ HTML;
                 throw new AuthException("Les mots de passe ne correspondent pas");
             $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
             $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
-            Auth::register($email, $password);
+            $nom = filter_var($_POST['nom'], FILTER_SANITIZE_STRING);
+            $prenom = filter_var($_POST['prenom'], FILTER_SANITIZE_STRING);
+            Auth::register($email, $password, $nom, $prenom);
         } catch (Exception $e) {
             return <<<HTML
                         <h2 style="color: red">Erreur lors de l'inscription</h2>

@@ -46,20 +46,20 @@ class Auth
     /**
      * @throws AuthException
      */
-    public static function register(string $email, string $password): void
+    public static function register(string $email, string $password, string $nom="", string $prenom=""): void
     {
         if (strlen($password) < 10) {
             throw new AuthException("Mot de passe trop court");
         }
         $db = ConnexionFactory::makeConnection();
-        $st = $db->prepare( "SELECT * FROM utilisateur WHERE email = ?");
-        $st->execute([$email]);
+        $st = $db->prepare( "SELECT * FROM utilisateur WHERE email = :email");
+        $st->execute(["email" => $email]);
         $row = $st->fetch();
         if ($row != null) {
             throw new AuthException("L'utilisateur existe déjà");
         }
-        $st = $db->prepare("INSERT INTO utilisateur (email, password) VALUES (?,?)");
-        $st->execute([$email, password_hash($password, PASSWORD_DEFAULT)]);
+        $st = $db->prepare("INSERT INTO utilisateur (email, password, nom, prenom) VALUES (?,?,?,?)");
+        $st->execute([$email, password_hash($password, PASSWORD_DEFAULT), $nom, $prenom]);
     }
 
 }
