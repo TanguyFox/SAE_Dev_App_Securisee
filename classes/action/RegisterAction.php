@@ -14,7 +14,7 @@ class RegisterAction extends Action
         if ($_SERVER['REQUEST_METHOD'] === 'GET')
             return <<<HTML
                 <h2>Inscription</h2>
-                <form action='?action=add-user' method='post'>
+                <form action='?action=register' method='post'>
                     <table>
                         <tr>
                             <td>Email</td>
