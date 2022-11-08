@@ -2,6 +2,8 @@
 
 namespace netvod\user;
 
+use netvod\exceptions\InvalidPropertyNameException;
+
 class Profil
 {
     private string $avatar;
@@ -17,5 +19,23 @@ class Profil
         $this->watched=$w;
         $this->continue=$c;
     }
+
+    /**
+     * @throws InvalidPropertyNameException
+     */
+    public function __get(string $attr):mixed{
+        if (property_exists ($this, $attr)) return $this->$attr;
+        throw new InvalidPropertyNameException(" $attr: invalid property");
+    }
+
+    /**
+     * @throws InvalidPropertyNameException
+     */
+    public function __set(string $attr, mixed $value):void{
+        if ( property_exists ($this, $attr) ) {
+            $this->$attr = $value;
+        } else throw new InvalidPropertyNameException(" $attr: invalid property");
+    }
+
 
 }
