@@ -44,7 +44,7 @@ class Episode
         if (!$result) {
             return false;
         } else {
-            return new Episode($result['numero'], $result['titre'], $result['resume'], $result['duree'], $result['file'], $result['serie_id']);
+            return new Episode($result['id'], $result['numero'], $result['titre'], $result['resume'], $result['duree'], $result['file'], $result['serie_id']);
         }
     }
 }

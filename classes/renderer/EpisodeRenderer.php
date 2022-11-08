@@ -16,17 +16,17 @@ class EpisodeRenderer implements Renderer
 
     public function render(int $selector): string
     {
-        return $this->rendered = ($selector == Renderer::COMPACT) ? $this->rendererCompact(): $this->rendererLong();
+        return ($selector == Renderer::COMPACT) ? $this->rendererCompact(): $this->rendererLong();
     }
 
     protected function rendererCompact(): string
     {
         return '
         <div class="card" style="width: 18rem;">
-          <!--TODO A FAIRE MAXIME-->
           <div class="card-body">
-            <h5 class="card-title">'.$this->episode->titre.' <small> '.$this->serie->annee.' </small></h5>
+            <h5 class="card-title">'.$this->episode->id.' - '.$this->episode->titre.'</h5>
             <p class="card-text">'.$this->episode->resume.'</p>
+            <p class="card-text"><small class="text-muted">Duree: '.$this->episode->duree.'</small></p>
             <a href="#" class="btn btn-primary">Details</a>
           </div>
         </div>
@@ -34,7 +34,14 @@ class EpisodeRenderer implements Renderer
     }
 
     protected function rendererLong(): string{
-        //TODO: implement this method
+        return '
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">'.$this->episode->titre.' <small> '.$this->episode->annee.' </small></h5>
+            <p class="card-text">'.$this->episode->resume.'</p>
+          </div>
+        </div>
+        ';
     }
 
 }

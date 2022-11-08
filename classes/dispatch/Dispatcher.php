@@ -5,6 +5,7 @@ namespace netvod\dispatch;
 use Exception;
 use netvod\action\AccueilCatalogueAction;
 use netvod\action\DefaultAction;
+use netvod\action\DisplaySerieAction;
 use netvod\action\LogoutAction;
 use netvod\action\SignInAction;
 use netvod\action\RegisterAction;
@@ -28,6 +29,8 @@ class Dispatcher
             'register' => new RegisterAction(),
             'logout' => new LogoutAction(),
             'AccueilCatalogueAction' => new AccueilCatalogueAction(),
+            'DisplayEpisodeDetailsAction' => new DisplayEpisodeDetailsAction(),
+            'DisplaySerieAction' => new DisplaySerieAction(),
             default => new DefaultAction(),
         };
         try {
@@ -44,7 +47,7 @@ class Dispatcher
             <head>
                 <meta charset="UTF-8">
                 <title>NetVOD - '.$_GET['action'].'</title>
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
             </head>
             <body>
                 <style>
