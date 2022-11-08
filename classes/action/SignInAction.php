@@ -29,7 +29,7 @@ class SignInAction extends Action
                 if(empty($utilisateur->profiles)){
                     $html .= "Vous n'avez pas de profil pour le moment... Créez-en un !";
                 }
-                foreach ($utilisateur->profiles as $profil) {
+                foreach ($utilisateur->accounts as $profil) {
                     $html = "<li>$profil->nom</li>";
                 }
                 $html .= "</ul>";

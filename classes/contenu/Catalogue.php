@@ -22,7 +22,7 @@ class Catalogue
         $result = $stmt->fetchAll();
         $series = [];
         foreach($result as $serie){
-            $series[] = new Serie($serie['titre'], $serie['descriptif'], $serie['img'], $serie['annee'], $serie['date_ajout']);
+            $series[] = new Serie($serie["id"], $serie['titre'], $serie['descriptif'], $serie['img'], $serie['annee'], $serie['date_ajout']);
         }
         return $series;
     }
