@@ -24,7 +24,7 @@ class SignInAction extends Action
                 $mdp = filter_var($_POST['passw'], FILTER_SANITIZE_SPECIAL_CHARS);
                 Auth::authenticate($email, $mdp);
                 $utilisateur = unserialize($_SESSION['user']);
-                $html .= "Bienvenue sur NetVod {$utilisateur->prenom} !";
+                $html .= "Bienvenue sur NetVod {$utilisateur->prenom} {$utilisateur->nom} !";
                 $html .= "<a href='?action=acess-profile'> Choississez votre profil</a><ul>";
                 if(empty($utilisateur->profiles)){
                     $html .= "Vous n'avez pas de profil pour le moment... Créez-en un !";
@@ -33,6 +33,7 @@ class SignInAction extends Action
                     $html = "<li>$profil->nom</li>";
                 }
                 $html .= "</ul>";
+                $html .= '<a href="?action=AccueilCatalogueAction" type="button" class="btn btn-primary">Temporaire - Catalogue</a>';
             }catch(\netvod\exceptions\AuthException $e) {
                 $html = "Echec d'authentification : " . $e->getMessage();
             }
