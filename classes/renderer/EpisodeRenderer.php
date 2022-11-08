@@ -16,10 +16,10 @@ class EpisodeRenderer implements Renderer
 
     public function render(int $selector): string
     {
-        return $this->rendered = ($selector == Renderer::COMPACT) ? $this->compact(): $this->rendererLong();
+        return $this->rendered = ($selector == Renderer::COMPACT) ? $this->rendererCompact(): $this->rendererLong();
     }
 
-    protected function rendererLong():String
+    protected function rendererCompact(): string
     {
         return '
         <div class="card" style="width: 18rem;">
@@ -31,6 +31,10 @@ class EpisodeRenderer implements Renderer
           </div>
         </div>
         ';
+    }
+
+    protected function rendererLong(): string{
+        //TODO: implement this method
     }
 
 }

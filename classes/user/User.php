@@ -3,6 +3,7 @@ namespace netvod\user;
 use netvod\exceptions\InvalidPropertyNameException;
 use netvod\exceptions\InvalidPropertyValueException;
 
+
 class User
 {
     private string $nom;
@@ -11,9 +12,9 @@ class User
     private string $password;
     private array $accounts;
 
-    public function __construct(string $n, string $p, string $mail, string $pwd, array $account=[]){
-        $this->nom=$n;
-        $this->prenom=$p;
+    public function __construct(string $n, string $p, string $mail, string $pwd, array $profile=[]){
+        $this->nom=$n ?? "";
+        $this->prenom=$p ?? "";
         $this->email=$mail;
         $this->password=$pwd;
         $this->accounts=$account;
