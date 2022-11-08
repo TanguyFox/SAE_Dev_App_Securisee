@@ -27,7 +27,7 @@ class EpisodeRenderer implements Renderer
             <h5 class="card-title">'.$this->episode->id.' - '.$this->episode->titre.'</h5>
             <p class="card-text">'.$this->episode->resume.'</p>
             <p class="card-text"><small class="text-muted">Duree: '.$this->episode->duree.'</small></p>
-            <a href="#" class="btn btn-primary">Details</a>
+            <a href="?action=DisplayEpisodeDetailsAction&id='.$this->episode->id.'" class="btn btn-primary">Details</a>
           </div>
         </div>
         ';

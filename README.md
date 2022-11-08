@@ -2,18 +2,18 @@
 ### Réalisé par ARNAUD Elian, BRESSON Jules, CARLIER Maxime, PELLIZZARI Théo et RENARD Tanguy
 
 ## Fonctionnalités de base :
-| Fonctionnalité                                                                                                | Auteur | Statut |
-|---------------------------------------------------------------------------------------------------------------|--------|--------|
-| 1. Identification/Authentification – Formulaire de login                                                      | ?      | Non    |
-| 2. Inscription sur la plateforme                                                                              | ?      | Non    |
-| 3. Affichage du catalogue de séries                                                                           | ?      | Non    |
-| 4. Affichage détaillé d’une série et de la liste de ses épisodes                                              | ?      | Non    |
-| 5. Affichage/visionnage d’un épisode d’une série                                                              | ?      | Non    |
-| 6. Ajout d’une série dans la liste de préférence d’un utilisateur                                             | ?      | Non    |
-| 7. Page d’accueil d’un utilisateur : afficher ses séries préférées                                            | ?      | Non    |
-| 8. Lors du visionnage d’un épisode, ajouter automatiquement la série à la liste « en cours » de l’utilisateur | ?      | Non    |
-| 9. Lors du visionnage d’un épisode d’une série, noter et commenter la série                                   | ?      | Non    |
-| 10. Lors de l’affichage d’une série, indiquer sa note moyenne et donner accès aux commentaires                | ?      | Non    |
+| Fonctionnalité                                                                                                | Auteur      | Statut   |
+|---------------------------------------------------------------------------------------------------------------|-------------|----------|
+| 1. Identification/Authentification – Formulaire de login                                                      | Tanguy      | ok       |
+| 2. Inscription sur la plateforme                                                                              | Elian       | ok       |
+| 3. Affichage du catalogue de séries                                                                           | Maxime,Theo | ok       |
+| 4. Affichage détaillé d’une série et de la liste de ses épisodes                                              | Maxime,Theo | ok       |
+| 5. Affichage/visionnage d’un épisode d’une série                                                              | Maxime      | en cours |
+| 6. Ajout d’une série dans la liste de préférence d’un utilisateur                                             | Elian       | en cours |
+| 7. Page d’accueil d’un utilisateur : afficher ses séries préférées                                            | Elian       | en cours |
+| 8. Lors du visionnage d’un épisode, ajouter automatiquement la série à la liste « en cours » de l’utilisateur | ?           | Non      |
+| 9. Lors du visionnage d’un épisode d’une série, noter et commenter la série                                   | ?           | Non      |
+| 10. Lors de l’affichage d’une série, indiquer sa note moyenne et donner accès aux commentaires                | ?           | Non      |
 
 ## Fonctionnalités étendues :
 | Fonctionnalité                                                                                               | Auteur | Statut |

@@ -5,6 +5,7 @@ namespace netvod\dispatch;
 use Exception;
 use netvod\action\AccueilCatalogueAction;
 use netvod\action\DefaultAction;
+use netvod\action\DisplayEpisodeDetailsAction;
 use netvod\action\DisplaySerieAction;
 use netvod\action\LogoutAction;
 use netvod\action\SignInAction;
