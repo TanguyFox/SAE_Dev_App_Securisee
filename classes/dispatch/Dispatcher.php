@@ -39,7 +39,6 @@ class Dispatcher
             'signin' => new SigninAction(),
             'register' => new RegisterAction(),
             'logout' => new LogoutAction(),
-            'acceuil-catalogue' => new AccueilCatalogueAction(),
             'create-account' => new CreateProfilAction(),
             'access-account' => new AccessAccountAction(),
             'display-episode-details' => new DisplayEpisodeDetailsAction(),
