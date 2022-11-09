@@ -3,9 +3,11 @@
 namespace netvod\dispatch;
 
 use Exception;
+use netvod\action\AccessAccountAction;
 use netvod\action\AccueilCatalogueAction;
 use netvod\action\AddFavSeriesAction;
 use netvod\action\AddNoteAction;
+use netvod\action\CreateProfilAction;
 use netvod\action\DefaultAction;
 use netvod\action\DisplayEpisodeDetailsAction;
 use netvod\action\DisplaySerieAction;
@@ -33,6 +35,9 @@ class Dispatcher
             'signin' => new SigninAction(),
             'register' => new RegisterAction(),
             'logout' => new LogoutAction(),
+            'acceuil-catalogue' => new AccueilCatalogueAction(),
+            'create-account' => new CreateProfilAction(),
+            'access-account' => new AccessAccountAction(),
             'display-episode-details' => new DisplayEpisodeDetailsAction(),
             'display-serie' => new DisplaySerieAction(),
             'accueil-catalogue' => new AccueilCatalogueAction(),

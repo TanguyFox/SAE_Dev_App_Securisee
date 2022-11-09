@@ -29,10 +29,18 @@ class SignInAction extends Action
                 isset($_SESSION['user']) or Auth::authenticate($email, $mdp);
                 $utilisateur = unserialize($_SESSION['user']);
                 $html .= "Bienvenue sur NetVod !";
-                $html .= "<a href='?action=acess-profile'> Choississez votre profil</a><ul>";
                 if(empty($utilisateur->accounts)){
-                    $html .= "Vous n'avez pas de profil pour le moment... Créez-en un !";
-                }
+                    $html .= "Vous n'avez pas de profil pour le moment... <a href='?action=create-account'>Créez-en un !</a>";
+                }else {
+                    $html .= "<a href='?action=acess-profile'> Choississez votre profil</a><ul>";
+                    foreach ($utilisateur->accounts as $acc){
+                        $html .= <<<END
+                           <a href='?action=access-account'> <img src= "{$acc->avatar}"></a><br>
+                            {$acc->nom}
+END;
+
+                    }
+                $html .= "<a href='?action=acess-profile'> Choississez votre profil</a><ul>";
                 foreach ($utilisateur->accounts as $account) {
                     $html = "<li>$account->nom</li>";
                 }
