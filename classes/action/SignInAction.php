@@ -29,27 +29,29 @@ class SignInAction extends Action
                 isset($_SESSION['user']) or Auth::authenticate($email, $mdp);
                 $utilisateur = unserialize($_SESSION['user']);
                 $html .= "Bienvenue sur NetVod !";
-                if(empty($utilisateur->accounts)){
+                if (empty($utilisateur->accounts)) {
                     $html .= "Vous n'avez pas de profil pour le moment... <a href='?action=create-account'>Créez-en un !</a>";
-                }else {
+                } else {
                     $html .= "<a href='?action=acess-profile'> Choississez votre profil</a><ul>";
-                    foreach ($utilisateur->accounts as $acc){
+                    foreach ($utilisateur->accounts as $acc) {
                         $html .= <<<END
                            <a href='?action=access-account'> <img src= "{$acc->avatar}"></a><br>
                             {$acc->nom}
 END;
 
                     }
-                $html .= "<a href='?action=acess-profile'> Choississez votre profil</a><ul>";
-                foreach ($utilisateur->accounts as $account) {
-                    $html = "<li>$account->nom</li>";
+                    $html .= "<a href='?action=acess-profile'> Choississez votre profil</a><ul>";
+                    foreach ($utilisateur->accounts as $account) {
+                        $html = "<li>$account->nom</li>";
+                    }
+                    $html .= "</ul>";
+                    $html .= '<a href="?action=accueil-catalogue" type="button" class="btn btn-primary">Temporaire - Catalogue</a>';
+
+
                 }
-                $html .= "</ul>";
-                $html .= '<a href="?action=accueil-catalogue" type="button" class="btn btn-primary">Temporaire - Catalogue</a>';
-            }catch(\netvod\exceptions\AuthException $e) {
+            } catch
+            (\netvod\exceptions\AuthException $e) {
                 $html = "Echec d'authentification : " . $e->getMessage();
             }
-        }
         return $html;
-    }
 }
