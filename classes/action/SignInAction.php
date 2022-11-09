@@ -8,7 +8,7 @@ class SignInAction extends Action
 
     public function execute(): string
     {
-        $html="";
+        $html = "";
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $html .= <<<END
                     Connexion :<br><br>
@@ -19,7 +19,7 @@ class SignInAction extends Action
                     </form>
                     END;
 
-            if(isset($_SESSION['user'])){
+            if (isset($_SESSION['user'])) {
                 $html .= '<script>document.getElementById("login").submit()</script>';
             }
         } else {
@@ -53,5 +53,7 @@ END;
             (\netvod\exceptions\AuthException $e) {
                 $html = "Echec d'authentification : " . $e->getMessage();
             }
+        }
         return $html;
+    }
 }
