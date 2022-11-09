@@ -10,15 +10,16 @@ use netvod\renderer\SerieRenderer;
 class AccueilCatalogueAction extends Action
 {
 
+    /**
+     * @throws \Exception
+     */
     public function execute(): string
     {
         if (!isset($_SESSION['user']))
             header('Location: ?action=signin&error=notConnected');
-        if (!isset($_SESSION['accountId']))
-            header('Location: ?action=create-account&error=noAccount');
-        $user = $_SESSION['user'];
-        $accountId = $_SESSION['accountId'];
-        $account = $user->getAccount($accountId);
+        if (!isset($_SESSION['account']))
+            header('Location: ?action=create-profile&error=noAccount');
+        $account = unserialize($_SESSION['account']);
         $html = <<<HTML
                     <h1>Home Page</h1>
                     <p>Welcome {$account->name}</p>
