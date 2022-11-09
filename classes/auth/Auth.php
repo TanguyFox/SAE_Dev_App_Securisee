@@ -18,10 +18,9 @@ class Auth
         $st = $db->prepare( "SELECT * FROM utilisateur WHERE email = ?");
         $st->execute([$email]);
         $u = $st->fetch(\PDO::FETCH_ASSOC);
-        $hash = $u['password'];
-        if (!$u or !password_verify($pwd, $hash)) {
-            throw new AuthException("Mot de passe ou email incorrect.");
-        }
+	    if (!$u or !password_verify($pwd, $u['password'])) {
+		    throw new AuthException("Mot de passe ou email incorrect.");
+	    }
         $user = new User($u['nom'],$u['prenom'],$email, $u['password']);
         $_SESSION['user']=serialize($user);
         return true;
