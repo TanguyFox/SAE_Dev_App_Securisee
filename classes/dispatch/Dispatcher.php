@@ -21,10 +21,19 @@ class Dispatcher
     private string $action;
 
     public function __construct(string $action){
-        if(isset($_SESSION['user']) or in_array($action, array(null,"signin","register"))) {
-            $this->action = $action;
-        }else{
+        //pages autorisees sans login utilisateur (et du coup sans profil)
+        $aP1 = array(null,"signin","register"); //acceuil et pages de connexion
+
+        //pages autorisees avec login utilisateur (et sans profil), doit pouvoir acceder a la page de creation et de sélection de profil
+        $aP2 = array_merge($aP1, array("logout","create-profil"));
+        if(!isset($_SESSION['user']) and !in_array($action, $aP1)) {
             $this->action = "signin";
+        }else{
+            if(isset($_SESSION['user']) and !in_array($action, $aP2)){
+                $this->action = "signin"; //redirection vers la page de signin qui devrait afficher les profils de l'utilisateur (si il en a) + un bouton de création
+            }else{
+                $this->action = $action; //action validée
+            }
         }
     }
 
