@@ -3,6 +3,7 @@
 namespace netvod\user;
 
 use netvod\exceptions\InvalidPropertyNameException;
+use netvod\exceptions\InvalidPropertyValueException;
 
 class Account
 {
@@ -35,6 +36,14 @@ class Account
         if ( property_exists ($this, $attr) ) {
             $this->$attr = $value;
         } else throw new InvalidPropertyNameException(" $attr: invalid property");
+    }
+
+    /**
+     * @throws InvalidPropertyValueException
+     */
+    public function addFavSeries(int $id):void{
+        if(!in_array($id, $this->fav)) $this->fav[]=$id;
+        else throw new InvalidPropertyValueException("Série déjà dans vos favoris");
     }
 
 

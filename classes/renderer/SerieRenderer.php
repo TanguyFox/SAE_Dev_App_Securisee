@@ -22,6 +22,7 @@ class SerieRenderer implements Renderer
             <h5 class="card-title">'.$this->serie->titre.' <small> '.$this->serie->annee.' </small></h5>
             <p class="card-text">'.$this->serie->description.'</p>
             <p><small>'.$this->serie->date_ajout.'</small></p>
+            <a href="?action=add-fav-series" class="align-self-end btn btn-lg btn-block btn-primary">Ajouter a la série</a>
             <a href="?action=DisplaySerieAction&id='.$this->serie->id.'" class="align-self-end btn btn-lg btn-block btn-primary">Details</a>
           </div>
         </div>
