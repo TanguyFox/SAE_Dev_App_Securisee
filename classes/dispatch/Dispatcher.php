@@ -14,7 +14,6 @@ use netvod\action\DisplaySerieAction;
 use netvod\action\LogoutAction;
 use netvod\action\SignInAction;
 use netvod\action\RegisterAction;
-use netvod\action\UpdateEpisodeProgressAction;
 use netvod\action\UserHomePageAction;
 
 class Dispatcher
