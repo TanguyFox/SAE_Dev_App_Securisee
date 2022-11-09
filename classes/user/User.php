@@ -11,6 +11,7 @@ class User
     private string $email;
     private string $password;
     private array $accounts;
+    private int $nbAccount;
 
     public function __construct(string $n, string $p, string $mail, string $pwd, array $account=[]){
         $this->nom=$n ?? "";
@@ -38,6 +39,15 @@ class User
             if ($accountId == $account->id) return $account;
         }
         throw new InvalidPropertyValueException("Compte inexistant");
+    }
+
+    public function addAccount(Account $acc): void{
+        if($this->nbAccount <4) {
+            array_push($this->accounts, $acc);
+            $this->nbAccount++;
+        }else{
+            throw new \UserException(" Vous possédez déjà 4 comptes");
+        }
     }
 
     /**
