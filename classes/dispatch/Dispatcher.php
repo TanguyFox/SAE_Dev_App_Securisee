@@ -29,7 +29,7 @@ class Dispatcher
         if(!isset($_SESSION['user']) and !in_array($action, $aP1)) {
             $this->action = "signin";
         }else{
-            if(isset($_SESSION['user']) and !in_array($action, $aP2)){
+            if((isset($_SESSION['user']) and (!in_array($action, $aP2))) and (!isset($_SESSION['account']))){
                 $this->action = "signin"; //redirection vers la page de signin qui devrait afficher les profils de l'utilisateur (si il en a) + un bouton de création
             }else{
                 $this->action = $action; //action validée
