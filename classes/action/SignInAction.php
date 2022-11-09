@@ -12,17 +12,21 @@ class SignInAction extends Action
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $html .= <<<END
                     Connexion :<br><br>
-                    <form method="post" action="?action=signin">
+                    <form id="login" method="post" action="?action=signin">
                         <label>e-mail <input type="email" name="email"></label><br><br>
                         <label>Mot de passe : <input type="password" name="passw" value=""> </label>
                         <button type="submit">Se connecter</button>
                     </form>
                     END;
+
+            if(isset($_SESSION['user'])){
+                $html .= '<script>document.getElementById("login").submit()</script>';
+            }
         } else {
             try {
                 $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
                 $mdp = filter_var($_POST['passw'], FILTER_SANITIZE_SPECIAL_CHARS);
-                Auth::authenticate($email, $mdp);
+                isset($_SESSION['user']) or Auth::authenticate($email, $mdp);
                 $utilisateur = unserialize($_SESSION['user']);
                 $html .= "Bienvenue sur NetVod !";
                 $html .= "<a href='?action=acess-profile'> Choississez votre profil</a><ul>";
