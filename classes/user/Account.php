@@ -2,6 +2,7 @@
 
 namespace netvod\user;
 
+use netvod\db\ConnexionFactory;
 use netvod\exceptions\InvalidPropertyNameException;
 
 class Account
@@ -35,6 +36,19 @@ class Account
         if ( property_exists ($this, $attr) ) {
             $this->$attr = $value;
         } else throw new InvalidPropertyNameException(" $attr: invalid property");
+    }
+
+    public function isMarkedAndCommented(int $idEp):bool{
+        $db = ConnexionFactory::makeConnection();
+
+        $stmt = $db->prepare("SELECT `id` FROM profil WHERE profil_name=?");
+        $res = $stmt->execute([$this->nom]);
+        $id_compte = $res['id'];
+
+        $stmt2 = $db->prepare("SELECT `commentaire`,`note` FROM commentaire WHERE profil_id = ? AND episode_id = ? ");
+        $res = $stmt2->execute([$id_compte,$idEp]);
+        if(! $res) return true;
+        return false;
     }
 
 
