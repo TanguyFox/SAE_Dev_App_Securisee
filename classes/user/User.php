@@ -11,7 +11,7 @@ class User
     private string $email;
     private string $password;
     private array $accounts;
-    private int $nbAccount;
+    private int $nbAccount = 0;
 
     public function __construct(string $n, string $p, string $mail, string $pwd, array $account=[]){
         $this->nom=$n ?? "";
