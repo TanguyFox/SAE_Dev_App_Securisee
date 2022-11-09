@@ -1,0 +1,15 @@
+.tde {
+    height:20px;
+    width:20px;
+    cursor:pointer;
+}
+
+#value {
+    height:20px;
+    width: 20px;
+    background:#E0E001;
+}
+
+#glob {
+    display: flex;
+}
