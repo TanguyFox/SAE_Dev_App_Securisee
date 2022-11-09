@@ -4,6 +4,7 @@ namespace netvod\dispatch;
 
 use Exception;
 use netvod\action\AccueilCatalogueAction;
+use netvod\action\AddFavSeriesAction;
 use netvod\action\DefaultAction;
 use netvod\action\LogoutAction;
 use netvod\action\SignInAction;
@@ -27,7 +28,8 @@ class Dispatcher
             'signin' => new SigninAction(),
             'register' => new RegisterAction(),
             'logout' => new LogoutAction(),
-            'AccueilCatalogueAction' => new AccueilCatalogueAction(),
+            'accueil-catalogue' => new AccueilCatalogueAction(),
+            'add-fav-series' => new AddFavSeriesAction(),
             default => new DefaultAction(),
         };
         try {
@@ -55,7 +57,7 @@ class Dispatcher
             ';
         $content .= $html;
         if(isset($_SESSION['user'])) {
-            $content .= '<a href="index.php?action=logout" class="btn btn-danger centerFooter">Logout</a>';
+            $content .= '<a href="?action=logout" class="btn btn-danger centerFooter">Logout</a>';
         }
         $content .= '</body></html>';
         print($content);

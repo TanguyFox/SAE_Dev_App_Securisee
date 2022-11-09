@@ -3,24 +3,20 @@
 namespace netvod\action;
 
 use Exception;
-use User;
+use netvod\user\User;
 
 class AddFavSeriesAction extends Action
 {
 
     public function execute(): string
     {
-        if (isset($_SESSION['user'], $_SESSION['account'])) {
-            $user = unserialize($_SESSION['user']);
-            $account = unserialize($_SESSION['account']);
-            try {
-                $user->getAccount($account)->addFavSeries($_GET['id']);
-            } catch (Exception $e) {
-                return "Erreur : " . $e->getMessage();
-            }
-            $_SESSION['user'] = serialize($user);
-        } else
-            header('Location: index.php?action=signin');
-        return "true";
+        if (!isset($_SESSION['user']))
+            header('Location: ?action=signin&error=notConnected');
+        if (!isset($_SESSION['accountId']))
+            header('Location: ?action=access-profile&error=noAccount');
+        $user = unserialize($_SESSION['user']);
+        $accountId = ($_SESSION['accountId']);
+        $user->getAccount($accountId)->addFavSeries($_GET['id']);
+        return "";
     }
 }

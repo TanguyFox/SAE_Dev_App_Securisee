@@ -26,14 +26,14 @@ class SignInAction extends Action
                 $utilisateur = unserialize($_SESSION['user']);
                 $html .= "Bienvenue sur NetVod !";
                 $html .= "<a href='?action=acess-profile'> Choississez votre profil</a><ul>";
-                if(empty($utilisateur->profiles)){
+                if(empty($utilisateur->accounts)){
                     $html .= "Vous n'avez pas de profil pour le moment... Créez-en un !";
                 }
-                foreach ($utilisateur->profiles as $profil) {
-                    $html = "<li>$profil->nom</li>";
+                foreach ($utilisateur->accounts as $account) {
+                    $html = "<li>$account->nom</li>";
                 }
                 $html .= "</ul>";
-                $html .= '<a href="?action=AccueilCatalogueAction" type="button" class="btn btn-primary">Temporaire - Catalogue</a>';
+                $html .= '<a href="?action=accueil-catalogue" type="button" class="btn btn-primary">Temporaire - Catalogue</a>';
             }catch(\netvod\exceptions\AuthException $e) {
                 $html = "Echec d'authentification : " . $e->getMessage();
             }

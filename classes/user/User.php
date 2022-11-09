@@ -32,7 +32,7 @@ class User
     /**
      * @throws InvalidPropertyValueException
      */
-    public function getAccount($accountId): ?Account
+    public function getAccount($accountId): Account
     {
         foreach($this->accounts as $account) {
             if ($accountId == $account->id) return $account;
