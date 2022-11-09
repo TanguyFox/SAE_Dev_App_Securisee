@@ -12,11 +12,11 @@ class AddFavSeriesAction extends Action
     {
         if (!isset($_SESSION['user']))
             header('Location: ?action=signin&error=notConnected');
-        if (!isset($_SESSION['accountId']))
+        if (!isset($_SESSION['account']))
             header('Location: ?action=access-profile&error=noAccount');
         $user = unserialize($_SESSION['user']);
-        $accountId = ($_SESSION['accountId']);
-        $user->getAccount($accountId)->addFavSeries($_GET['id']);
+        $account = ($_SESSION['account']);
+        $account->addFavSeries($_GET['id']);
         return "";
     }
 }

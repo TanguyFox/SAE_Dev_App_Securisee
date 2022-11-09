@@ -15,14 +15,12 @@ class AccueilCatalogueAction extends Action
      */
     public function execute(): string
     {
-        if (!isset($_SESSION['user']))
-            header('Location: ?action=signin&error=notConnected');
-        if (!isset($_SESSION['account']))
-            header('Location: ?action=create-profile&error=noAccount');
-        $account = unserialize($_SESSION['account']);
+        if (!isset($_SESSION['user']))  header('Location: ?action=signin&error=notConnected');
+        if (!isset($_SESSION['account'])) header('Location: ?action=create-profile&error=noAccount');
+        $account = $_SESSION['account'];
         $html = <<<HTML
                     <h1>Home Page</h1>
-                    <p>Welcome {$account->name}</p>
+                    <p>Welcome {$account->nom}</p>
 HTML;
         if (empty($account->fav)) {
             $html .= ("Vous n'avez pas encore de série en favoris");
@@ -37,7 +35,7 @@ HTML;
 
         if ($this->http_method == 'GET') {
             $CatalogueRenderer = new CatalogueRenderer();
-            return $CatalogueRenderer->render(Renderer::LONG);
+            return $html . $CatalogueRenderer->render(Renderer::LONG);
         } else {
             throw new \Exception('Méthode HTTP non autorisée');
         }

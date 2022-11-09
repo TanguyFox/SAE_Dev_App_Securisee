@@ -79,7 +79,7 @@ class Dispatcher
             ';
         $content .= $html;
         if ($this->action != "user-home-page") {
-            $content .= '<a href="?action=user-home-page" class="btn btn-primary centerFooter">Home</a>';
+            $content .= '<a href="?action=accueil-catalogue" class="btn btn-primary centerFooter">Home</a>';
         }
         if(isset($_SESSION['user'])) {
             $content .= '<a href="?action=logout" class="btn btn-danger centerFooter">Logout</a>';
