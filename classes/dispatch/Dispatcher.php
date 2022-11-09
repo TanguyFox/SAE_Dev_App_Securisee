@@ -13,6 +13,7 @@ use netvod\action\LogoutAction;
 use netvod\action\SignInAction;
 use netvod\action\RegisterAction;
 use netvod\action\UpdateEpisodeProgressAction;
+use netvod\action\UserHomePageAction;
 
 class Dispatcher
 {
@@ -36,8 +37,9 @@ class Dispatcher
             'display-serie' => new DisplaySerieAction(),
             'accueil-catalogue' => new AccueilCatalogueAction(),
             'add-fav-series' => new AddFavSeriesAction(),
-			'add-note' => new AddNoteAction(),
-            default => new DefaultAction()
+            'add-note' => new AddNoteAction(),
+            'user-home-page' => new UserHomePageAction(),
+            default => new DefaultAction(),
         };
         try {
             $this->renderPage($action->execute());
@@ -64,6 +66,9 @@ class Dispatcher
                 </style>
             ';
         $content .= $html;
+        if ($this->action != "user-home-page") {
+            $content .= '<a href="?action=user-home-page" class="btn btn-primary centerFooter">Home</a>';
+        }
         if(isset($_SESSION['user'])) {
             $content .= '<a href="?action=logout" class="btn btn-danger centerFooter">Logout</a>';
         }
