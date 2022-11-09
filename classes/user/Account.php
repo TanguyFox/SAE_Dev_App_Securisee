@@ -69,4 +69,10 @@ class Account
         return $res['id'];
     }
 
+	public function addNote(int $id, int $note) : void {
+		$db = ConnexionFactory::makeConnection();
+		$st = $db->prepare( "INSERT INTO avis (profil_id, episode_id, note) VALUES (:profil_id, :episode_id, :note)");
+		$st->execute([':profil_id' => $_SESSION['profil']->id, ':episode_id' => $id, ':note' => $note]);
+	}
+
 }
