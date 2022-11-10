@@ -26,10 +26,18 @@ class UserHomePageAction extends Action
                 <div class="user_home_page">
                     <h2 style="text-align: center">Welcome {$affiche}</h2>
                         <h3 style="margin-left: 1em; text-decoration: underline">Vos favoris :</h3><br> 
-                </div>
+                
 HTML;
         $html .= $this->renderFavoris($user);
+
+        $html .= <<<HTML
+                  
+                        <h3 style="margin-left: 1em; text-decoration: underline">Votre Watchlist :</h3><br> 
+                </div>
+HTML;
+        $html .= $this->renderWatchlist($user);
         return $html;
+
     }
 
 
