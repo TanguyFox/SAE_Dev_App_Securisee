@@ -29,6 +29,7 @@ class SerieRenderer implements Renderer
 	            <p><small>' . $this->serie->date_ajout . '</small></p>
 	            <p>Note : ' . $this->serie->getNoteMoyenne() . '</p>
 	            <a href="?action=add-fav-series&id=' . $this->serie->id . '"  class="align-self-end btn btn-lg btn-block btn-primary" style="margin: 1rem">Ajouter aux favoris</a>
+	            <a href="?action=delete-fav-series&id=' . $this->serie->id . '" class="align-self-end btn btn-lg btn-block btn-primary" style="margin: 1rem">Supprimer des favoris</a>
 	            '. $display .'
 	          </div>
 	        </div>

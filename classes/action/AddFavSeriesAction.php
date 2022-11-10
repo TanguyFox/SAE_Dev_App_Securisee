@@ -2,9 +2,6 @@
 
 namespace netvod\action;
 
-use Exception;
-use netvod\contenu\serie\Serie;
-use netvod\db\ConnexionFactory;
 use netvod\user\User;
 
 class AddFavSeriesAction extends Action

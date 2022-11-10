@@ -8,6 +8,7 @@ use netvod\action\AddComAction;
 use netvod\action\AddFavSeriesAction;
 use netvod\action\AddNoteAction;
 use netvod\action\DefaultAction;
+use netvod\action\DeleteFavSeriesAction;
 use netvod\action\DisplayEpisodeDetailsAction;
 use netvod\action\DisplaySerieAction;
 use netvod\action\GestionUtilisateurAction;
@@ -46,11 +47,10 @@ class Dispatcher {
             'display-serie' => new DisplaySerieAction(),
             'accueil-catalogue' => new AccueilCatalogueAction(),
             'add-fav-series' => new AddFavSeriesAction(),
-	        //'add-note' => new AddNoteAction(),
-	        //'add-com' => new AddComAction(),
             'user-home-page' => new UserHomePageAction(),
             'gestion-utilisateur' => new GestionUtilisateurAction(),
             'update-episode-progress' => new UpdateEpisodeProgressAction(),
+	        'delete-fav-series' => new DeleteFavSeriesAction(),
             default => new DefaultAction(),
         };
         try {
