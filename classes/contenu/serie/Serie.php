@@ -70,18 +70,4 @@ class Serie
         }
         return $note;
     }
-
-    public static function ajouterListe($serie_id, $user_id, $genre) : bool{
-        $sql = "SELECT list_id FROM user2list WHERE user_id = :user_id AND nom_genre = :genre";
-        $stmt = ConnexionFactory::makeConnection()->prepare($sql);
-        $stmt->execute(['user_id' => $user_id, 'genre' => $genre]);
-        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
-        $id_list = $result['id_list'];
-        $sql = "INSERT INTO list2series (list_id, serie_id) VALUES (:list_id, :serie_id)";
-        $stmt = ConnexionFactory::makeConnection()->prepare($sql);
-        $stmt->execute(['list_id' => $id_list, 'serie_id' => $serie_id]);
-        if ($stmt->rowCount() == 1) return true;
-        else return false;
-    }
-
 }
