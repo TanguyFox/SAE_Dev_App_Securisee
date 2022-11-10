@@ -5,12 +5,13 @@ use netvod\db\ConnexionFactory;
 use netvod\exceptions\InvalidPropertyNameException;
 use netvod\exceptions\InvalidPropertyValueException;
 
-define('FAV', 'lVideoPref');
-define('WATCHED', 'lVideoVisio');
-define('WATCHLIST', 'lVideoEnCours');
-
 class User
 {
+
+const FAV = 'lVideoPref';
+const WATCHED = 'lVideoVisio';
+const WATCHLIST = 'lVideoEnCours';
+
     private string $nom;
     private string $prenom;
     private string $email;
