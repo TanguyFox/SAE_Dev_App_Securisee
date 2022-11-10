@@ -42,6 +42,6 @@ class DisplaySerieAction extends Action {
 			</div>
 			';
         }
-		return $html;
+        return $html;
     }
 }
