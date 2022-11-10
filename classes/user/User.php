@@ -46,14 +46,14 @@ class User {
     }
 
     public function ajouterListe(int $serie_id, User $user, $genre): void {
-        if ($this->getSeriesList($genre) == []) {
-            $this->createSerieList($user, $genre);
-        }
         $user_id = $user->getIdFromDb();
         $db = ConnexionFactory::makeConnection();
         $st = $db->prepare("SELECT list_id FROM user2list WHERE user_id = :user_id AND nom_genre = :genre");
         $st->execute(['user_id' => $user_id, 'genre' => $genre]);
         $list_id = $st->fetch()['list_id'];
+        if ($list_id == null) {
+            $this->createSerieList($user, $genre);
+        }
         $st = $db->prepare("INSERT INTO list2series (list_id, serie_id) VALUES (:list_id, :serie_id)");
         echo $st->setFetchMode(\PDO::ERRMODE_EXCEPTION);
         try {
