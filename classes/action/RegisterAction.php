@@ -13,6 +13,7 @@ class RegisterAction extends Action
     {
         if ($_SERVER['REQUEST_METHOD'] === 'GET')
             return <<<HTML
+            <div class="form_content">
                 <h2>Inscription</h2>
                 <form action='?action=register' method='post'>
                     <table>
@@ -34,6 +35,7 @@ class RegisterAction extends Action
                     <input type='submit' value="S'inscrire" style="margin: 1em 0 0 21em"/>
                 </div>
                 </form>
+            </div>
 HTML;
         else
 

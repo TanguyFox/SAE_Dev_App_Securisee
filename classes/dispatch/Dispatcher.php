@@ -79,8 +79,8 @@ class Dispatcher {
 
         if (isset($_SESSION['user'])) {
 $content .= <<<HTML
-                            <p><a href="?action=accueil-catalogue">Accueil</a></p>
-                            <p><a href="?action=display-serie">Séries</a></p>
+                            <p><a href="?action=user-home-page">Accueil</a></p>
+                            <p><a href="?action=accueil-catalogue">Catalogue</a></p>
                             <p><a href="?action=gestion-utilisateur">Mon compte</a></p>
                             <p><a href="?action=logout">Déconnexion</a></p>
 HTML;
@@ -96,12 +96,6 @@ $content .= <<<HTML
 HTML;
 
         $content .= $html;
-
-        if(isset($_SESSION['user'])) {
-            if ($this->action != "user-home-page")
-                $content .= '<a href="?action=user-home-page" class="btn btn-primary centerFooter">Home</a>';
-            $content .= '<a href="?action=logout" class="btn btn-danger centerFooter">Logout</a>';
-        }
         $content .= '</body></html>';
         print($content);
     }

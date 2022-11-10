@@ -16,7 +16,7 @@ class DefaultAction extends Action
                     HTML;
             }
         return $html .= <<<HTML
-<div class="content">
+<div class="form_content">
     <h2>Connexion</h2>
     <form action='?action=signin' method='post'>
         <table>
