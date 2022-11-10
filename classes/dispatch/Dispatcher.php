@@ -61,7 +61,7 @@ class Dispatcher {
     }
 
     private function renderPage(string $html): void{
-        $content='
+        $content= '
             <!DOCTYPE html>
             <html lang="fr">
             <head>
@@ -69,15 +69,32 @@ class Dispatcher {
                 <title>NetVOD - '.$_GET['action'].'</title>
                 <link rel="stylesheet" href="css/style.css">
                 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
             </head>
             <body>
-                <style>
-                    body{
-                        text-align: center;
-                    }  
-                </style>
-            ';
+                <header>
+                    <div id="logo">
+                        <a href="?action=accueil-catalogue"><img src="images/logo.png" alt="logo" id="logo_image"></a>
+                    </div>
+                    <div id="menu">';
+
+        if (isset($_SESSION['user'])) {
+$content .= <<<HTML
+                            <p><a href="?action=accueil-catalogue">Accueil</a></p>
+                            <p><a href="?action=display-serie">Séries</a></p>
+                            <p><a href="?action=gestion-utilisateur">Mon compte</a></p>
+                            <p><a href="?action=logout">Déconnexion</a></p>
+HTML;
+} else {
+$content .= <<<HTML
+                            <p><a href="?action=signin">Connexion</a></p>
+                            <p><a href="?action=register">Inscription</a></p>
+HTML;
+}
+$content .= <<<HTML
+                    </div>
+                </header> 
+HTML;
+
         $content .= $html;
 
         if(isset($_SESSION['user'])) {

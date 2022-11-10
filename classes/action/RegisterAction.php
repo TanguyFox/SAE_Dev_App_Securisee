@@ -29,9 +29,9 @@ class RegisterAction extends Action
                             <td><input type='password' name='password2'/></td>
                         </tr>
                     </table>
-                    <input type='submit' value="S'inscrire"' />
-                    <div>
-                    <a href="?">Accueil</a>
+                    
+                    <a href="?" >Se connecter</a>
+                    <input type='submit' value="S'inscrire" style="margin: 1em 0 0 21em"/>
                 </div>
                 </form>
 HTML;
@@ -51,10 +51,7 @@ HTML;
                         <a href="?action=register">Réessayer</a> 
 HTML;
         }
-        return <<<HTML
-                    <h2>Utilisateur ajouté</h2>
-                    <a href="?action=signin">Se connecter</a>
-                    <a href='?'>Accueil</a>
-HTML;
+        header("Location: ?get=register-success");
+        return "";
     }
 }
