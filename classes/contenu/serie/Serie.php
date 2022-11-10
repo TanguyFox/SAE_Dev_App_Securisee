@@ -70,5 +70,4 @@ class Serie
         }
         return $note;
     }
-
 }

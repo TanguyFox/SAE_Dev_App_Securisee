@@ -1,12 +1,17 @@
 <?php
 namespace netvod\user;
+use netvod\contenu\serie\Serie;
 use netvod\db\ConnexionFactory;
 use netvod\exceptions\InvalidPropertyNameException;
-use netvod\exceptions\InvalidPropertyValueException;
 
 
 class User
 {
+
+const FAV = 'lVideoPref';
+const WATCHED = 'lVideoVisio';
+const WATCHLIST = 'lVideoEnCours';
+
     private string $nom;
     private string $prenom;
     private string $email;
@@ -38,19 +43,26 @@ class User
         } else throw new InvalidPropertyNameException(" $attr: invalid property");
     }
 
+    public static function ajouterListe($serie_id, $user_id, $genre) : bool
+    {
+        $sql = "SELECT list_id FROM user2list WHERE user_id = :user_id AND nom_genre = :genre";
+        $stmt = ConnexionFactory::makeConnection()->prepare($sql);
+        $stmt->execute(['user_id' => $user_id, 'genre' => $genre]);
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        $id_list = $result['id_list'];
+        $sql = "INSERT INTO list2series (list_id, serie_id) VALUES (:list_id, :serie_id)";
+        $stmt = ConnexionFactory::makeConnection()->prepare($sql);
+        $stmt->execute(['list_id' => $id_list, 'serie_id' => $serie_id]);
+        if ($stmt->rowCount() == 1) return true;
+        else return false;
+    }
+
     public function updateInfos():void{
         $db = ConnexionFactory::makeConnection();
         $st = $db->prepare("UPDATE utilisateur SET nom=?, prenom=?, genre_pref=?");
         $st->execute([$this->nom,$this->prenom,$this->genre_pref]);
     }
 
-	/**
-	 * @throws InvalidPropertyValueException
-	 */
-	public function addFavSeries(int $id):void{
-        if(!in_array($id, $this->fav)) array_push($this->fav,$id);
-        else throw new InvalidPropertyValueException("Série déjà dans vos favoris");
-    }
 
     public function addNote(int $id, int $note) : void {
         $db = ConnexionFactory::makeConnection();
@@ -123,4 +135,24 @@ class User
         return (is_array($result) && array_key_exists('tpsVisio', $result)) ? $result['tpsVisio'] : 0;
     }
 
+    public static function getSeriesList(string $genre) : array{
+        $user_id = self::getIdFromDb();
+        $sql = "SELECT list_id FROM user2list WHERE  user_id = :user_id AND nom_genre = :genre";
+        $stmt = ConnexionFactory::makeConnection()->prepare($sql);
+        $stmt->execute([$user_id,'genre' => $genre]);
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if ($result)
+            $id_list = $result['list_id'];
+        else
+            return [];
+        $sql = "SELECT serie_id FROM list2series WHERE list_id = :list_id";
+        $stmt = ConnexionFactory::makeConnection()->prepare($sql);
+        $stmt->execute(['list_id' => $id_list]);
+        $result = $stmt->fetchAll();
+        $series = [];
+        foreach($result as $serie){
+            $series[] = Serie::getSerieFromId($serie['serie_id']);
+        }
+        return $series;
+    }
 }
