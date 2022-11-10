@@ -5,6 +5,7 @@ namespace netvod\action;
 use netvod\contenu\serie\Serie;
 use netvod\renderer\Renderer;
 use netvod\renderer\SerieRenderer;
+use netvod\user\User;
 
 class UserHomePageAction extends Action
 {
@@ -26,7 +27,17 @@ class UserHomePageAction extends Action
                         <a href='?action=accueil-catalogue' type='button' class='btn btn-primary'>Catalogue</a><br>
                         Vos favoris :<br> 
 HTML;
+        $html .= $this->renderFavoris($user);
+        return $html;
+    }
 
+    private function renderFavoris(mixed $user): string
+    {
+        $html = "";
+        $series = User::getSeriesList(genre: Serie::FAV);
+        foreach ($series as $serie) {
+            $html .= (new SerieRenderer($serie))->render(Renderer::COMPACT);
+        }
         return $html;
     }
 }

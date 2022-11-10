@@ -7,10 +7,6 @@ use netvod\db\ConnexionFactory;
 use netvod\exceptions\InvalidPropertyNameException;
 use netvod\exceptions\NonEditablePropertyException;
 
-define('FAV', 'lVideoPref');
-define('WATCHED', 'lVideoVisio');
-define('WATCHLIST', 'lVideoEnCours');
-
 class Serie
 {
     private int $id;

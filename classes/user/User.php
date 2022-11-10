@@ -5,6 +5,9 @@ use netvod\db\ConnexionFactory;
 use netvod\exceptions\InvalidPropertyNameException;
 use netvod\exceptions\InvalidPropertyValueException;
 
+define('FAV', 'lVideoPref');
+define('WATCHED', 'lVideoVisio');
+define('WATCHLIST', 'lVideoEnCours');
 
 class User
 {
