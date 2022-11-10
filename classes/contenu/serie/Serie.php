@@ -93,4 +93,16 @@ class Serie
 		return $result['commentaire'] ?? null;
 	}
 
+    public static function getSerieFromKeyWords(string $keyWords): array{
+        $sql = "SELECT * FROM serie WHERE titre LIKE :keyWords OR descriptif LIKE :keyWords";
+        $stmt = ConnexionFactory::makeConnection()->prepare($sql);
+        $stmt->execute(['keyWords' => "%$keyWords%"]);
+        $result = $stmt->fetchAll();
+        $series = [];
+        foreach($result as $serie){
+            $series[] = new Serie($serie['id'], $serie['titre'], $serie['descriptif'], $serie['img'], $serie['annee'], $serie['date_ajout']);
+        }
+        return $series;
+    }
+
 }

@@ -21,4 +21,13 @@ class CatalogueRenderer implements Renderer
         $html .= '</div>';
         return $html;
     }
+
+    public function renderSearch(array $searched) : string{
+        $html= '<div class="card-group">';
+        foreach($searched as $serie){
+            $html .= (new SerieRenderer($serie))->render(Renderer::COMPACT);
+        }
+        $html .= '</div>';
+        return $html;
+    }
 }
