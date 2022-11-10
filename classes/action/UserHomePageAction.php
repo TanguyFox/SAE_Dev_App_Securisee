@@ -3,6 +3,7 @@
 namespace netvod\action;
 
 use netvod\contenu\serie\Serie;
+use netvod\renderer\CatalogueRenderer;
 use netvod\renderer\Renderer;
 use netvod\renderer\SerieRenderer;
 use netvod\user\User;
@@ -12,31 +13,23 @@ class UserHomePageAction extends Action
 
     public function execute(): string
     {
-       if (!isset($_SESSION['user'])) {
+        if (!isset($_SESSION['user']))
             header('Location: ?action=signin&error=notConnected');
-        } else {
+        $user = unserialize($_SESSION['user']);
+        if ($user->prenom === "")
+            $affiche = $user->email;
+        else
+            $affiche = $user->prenom;
 
-
-           $user = unserialize($_SESSION['user']);
-           if ($user->prenom === "") {
-               $affiche = $user->email . "<br>";
-           } else {
-               $affiche = $user->prenom . "<br>";
-           }
-
-           $html = <<<HTML
-                    <h1>Home Page</h1>
-                    <p>Welcome {$affiche}</p>
-                        Votre genre préféré : {$user->genre_pref}
-                        <a href='?action=accueil-catalogue' type='button' class='btn btn-primary'>Catalogue</a><br>
-                        <a href='?action=gestion-utilisateur' type='button' class='btn btn-primary'>Gestion du profil</a><br>
-                        Vos favoris :<br> 
+        $html = <<<HTML
+                <div class="user_home_page">
+                    <h2 style="text-align: center">Welcome {$affiche}</h2>
+                        <h3 style="margin-left: 1em; text-decoration: underline">Vos favoris :</h3><br> 
+                </div>
 HTML;
-           $html .= $this->renderFavoris($user);
-       }
-            return $html;
+        $html .= $this->renderFavoris($user);
+        return $html;
     }
-
 
     private function renderFavoris(User $user): string {
         $html = "";

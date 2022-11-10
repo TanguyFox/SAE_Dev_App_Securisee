@@ -13,6 +13,7 @@ class RegisterAction extends Action
     {
         if ($_SERVER['REQUEST_METHOD'] === 'GET')
             return <<<HTML
+            <div class="form_content">
                 <h2>Inscription</h2>
                 <form action='?action=register' method='post'>
                     <table>
@@ -29,11 +30,12 @@ class RegisterAction extends Action
                             <td><input type='password' name='password2'/></td>
                         </tr>
                     </table>
-                    <input type='submit' value="S'inscrire"' />
-                    <div>
-                    <a href="?">Accueil</a>
+                    
+                    <a href="?" >Se connecter</a>
+                    <input type='submit' value="S'inscrire" style="margin: 1em 0 0 21em"/>
                 </div>
                 </form>
+            </div>
 HTML;
         else
 
@@ -52,10 +54,7 @@ HTML;
                         <a href="?action=register">Réessayer</a> 
 HTML;
         }
-        return <<<HTML
-                    <h2>Utilisateur ajouté</h2>
-                    <a href="?action=signin">Se connecter</a>
-                    <a href='?'>Accueil</a>
-HTML;
+        header("Location: ?get=register-success");
+        return "";
     }
 }

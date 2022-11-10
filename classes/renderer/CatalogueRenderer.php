@@ -14,7 +14,7 @@ class CatalogueRenderer implements Renderer
 
     public function render(int $selector): string
     {
-        $html= '<div class="card-group">';
+        $html= '<div class="catalogue">';
         foreach($this->series as $serie){
             $html .= (new SerieRenderer($serie))->render(Renderer::COMPACT);
         }
@@ -23,7 +23,7 @@ class CatalogueRenderer implements Renderer
     }
 
     public function renderSearch(array $searched) : string{
-        $html= '<div class="card-group">';
+        $html= '<div class="catalogue">';
         foreach($searched as $serie){
             $html .= (new SerieRenderer($serie))->render(Renderer::COMPACT);
         }
