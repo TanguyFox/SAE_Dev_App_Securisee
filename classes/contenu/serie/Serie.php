@@ -58,7 +58,7 @@ class Serie
         }
     }
 
-    public function getNote(): string{
+    public function getNoteMoyenne(): string {
         $sql = "SELECT AVG(note) as moyenne FROM avis WHERE serie_id = :id";
         $stmt = ConnexionFactory::makeConnection()->prepare($sql);
         $stmt->execute(['id' => $this->id]);
@@ -70,4 +70,27 @@ class Serie
         }
         return $note;
     }
+
+	public function getNote() : ? int {
+		if (isset($_SESSION['user'])) {
+			$u = unserialize($_SESSION['user']);
+			$sql = "SELECT note FROM avis WHERE serie_id = :id AND user_id = :user_id";
+			$stmt = ConnexionFactory::makeConnection()->prepare($sql);
+			$stmt->execute(['id' => $this->id, 'user_id' => $u->getIdFromDb()]);
+			$result = $stmt->fetch(\PDO::FETCH_ASSOC);
+		}
+		return $result['note'] ?? null;
+	}
+
+	public function getCom() : ? string {
+		if (isset($_SESSION['user'])) {
+			$u = unserialize($_SESSION['user']);
+			$sql = "SELECT commentaire FROM avis WHERE serie_id = :id AND user_id = :user_id";
+			$stmt = ConnexionFactory::makeConnection()->prepare($sql);
+			$stmt->execute(['id' => $this->id, 'user_id' => $u->getIdFromDb()]);
+			$result = $stmt->fetch(\PDO::FETCH_ASSOC);
+		}
+		return $result['commentaire'] ?? null;
+	}
+
 }

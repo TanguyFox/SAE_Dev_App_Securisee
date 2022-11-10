@@ -33,7 +33,6 @@ const WATCHLIST = 'lVideoEnCours';
         throw new InvalidPropertyNameException(" $attr: invalid property");
     }
 
-
     /**
      * @throws InvalidPropertyNameException
      */
@@ -65,23 +64,39 @@ const WATCHLIST = 'lVideoEnCours';
 
 
     public function addNote(int $id, int $note) : void {
-        $db = ConnexionFactory::makeConnection();
-        $st = $db->prepare( "INSERT INTO avis (user_id, serie_id, note) VALUES (:user_id, :serie_id, :note)");
-        $st->execute([':profil_id' => $_SESSION['profil']->id, ':episode_id' => $id, ':note' => $note]);
+		$sql = "SELECT * FROM avis WHERE avis.serie_id = :id AND avis.user_id = :user_id";
+		$stmt = ConnexionFactory::makeConnection()->prepare($sql);
+		$stmt->execute(['id' => $id, 'user_id' => $this->getIdFromDb()]);
+		$result = $stmt->fetch();
+		if (!$result) {
+			$sql = "INSERT INTO avis (serie_id, user_id, note) VALUES (:id, :user_id, :note)";
+		} else {
+			$sql = "UPDATE avis SET note = :note WHERE avis.serie_id = :id AND avis.user_id = :user_id";
+		}
+	    $stmt = ConnexionFactory::makeConnection()->prepare($sql);
+	    $stmt->execute(['id' => $id, 'user_id' => $this->getIdFromDb(), 'note' => $note]);
     }
 
-    public function getIdFromDB(): int{
-        $db = ConnexionFactory::makeConnection();
-        $st = $db->prepare("SELECT id FROM utilisateur WHERE email = :email");
-        $st->execute([':email' => $this->email]);
-        $result = $st->fetch();
-        return $result['id'];
-    }
+	public function addCom(int $id, string $com) : void {
+		$sql = "SELECT * FROM avis WHERE avis.serie_id = :id AND avis.user_id = :user_id";
+		$stmt = ConnexionFactory::makeConnection()->prepare($sql);
+		$stmt->execute(['id' => $id, 'user_id' => $this->getIdFromDb()]);
+		$result = $stmt->fetch();
+		if (!$result) {
+			$sql = "INSERT INTO avis (serie_id, user_id, commentaire) VALUES (:id, :user_id, :com)";
+		} else {
+			$sql = "UPDATE avis SET commentaire = :com WHERE avis.serie_id = :id AND avis.user_id = :user_id";
+		}
+		$stmt = ConnexionFactory::makeConnection()->prepare($sql);
+		$stmt->execute(['id' => $id, 'user_id' => $this->getIdFromDb(), 'com' => $com]);
+	}
 
-	public function addCom(int $id, int $com) : void {
+	public function getIdFromDb(): int {
 		$db = ConnexionFactory::makeConnection();
-		$st = $db->prepare( "INSERT INTO avis (user_id, serie_id, commentaire) VALUES (:user_id, :serie_id, :commentaire)");
-		$st->execute([':user_id' => $_SESSION['user']->id, ':serie_id' => $id, ':commentaire' => $com]);
+		$st = $db->prepare( "SELECT id FROM utilisateur WHERE email = :email");
+		$st->execute([':email' => $this->email]);
+		$result = $st->fetch();
+		return $result['id'];
 	}
 
     public function updateEpisodeProgress(int $id, float $time): void {
@@ -135,8 +150,8 @@ const WATCHLIST = 'lVideoEnCours';
         return (is_array($result) && array_key_exists('tpsVisio', $result)) ? $result['tpsVisio'] : 0;
     }
 
-    public static function getSeriesList(string $genre) : array{
-        $user_id = self::getIdFromDb();
+    public function getSeriesList(string $genre) : array{
+	    $user_id = $this->getIdFromDb();
         $sql = "SELECT list_id FROM user2list WHERE  user_id = :user_id AND nom_genre = :genre";
         $stmt = ConnexionFactory::makeConnection()->prepare($sql);
         $stmt->execute([$user_id,'genre' => $genre]);

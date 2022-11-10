@@ -32,10 +32,9 @@ HTML;
         return $html;
     }
 
-    private function renderFavoris(mixed $user): string
-    {
+    private function renderFavoris(User $user): string {
         $html = "";
-        $series = User::getSeriesList(genre: User::FAV);
+        $series = $user->getSeriesList(genre: User::FAV);
         if (empty($series))
             return "Vous n'avez pas de favoris <br>";
         foreach ($series as $serie) {
