@@ -59,14 +59,14 @@ class Serie
     }
 
     public function getNoteMoyenne(): string {
-        $sql = "SELECT AVG(note) as moyenne FROM avis WHERE serie_id = :id";
+        $sql = "SELECT ROUND(AVG(note), 1) as moyenne FROM avis WHERE serie_id = :id";
         $stmt = ConnexionFactory::makeConnection()->prepare($sql);
         $stmt->execute(['id' => $this->id]);
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
         if(!$result || is_null($result['moyenne'])){
             $note = "Non notée";
         }else{
-            $note = "{$result['moyenne']}/10";
+            $note = "{$result['moyenne']}/5";
         }
         return $note;
     }
@@ -94,9 +94,10 @@ class Serie
 	}
 
     public static function getSerieFromKeyWords(string $keyWords): array{
-        $sql = "SELECT * FROM serie WHERE titre LIKE :keyWords OR descriptif LIKE :keyWords";
+        $sql = "SELECT * FROM serie WHERE titre LIKE ? OR descriptif LIKE ?";
+        $keyWords = "%$keyWords%";
         $stmt = ConnexionFactory::makeConnection()->prepare($sql);
-        $stmt->execute(['keyWords' => "%$keyWords%"]);
+        $stmt->execute([$keyWords, $keyWords]);
         $result = $stmt->fetchAll();
         $series = [];
         foreach($result as $serie){
