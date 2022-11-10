@@ -177,6 +177,9 @@ class User
         $stmt = ConnexionFactory::makeConnection()->prepare($sql);
         $stmt->execute([$user_id, 'genre' => $genre]);
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if (!$result) {
+            return [];
+        }
         $id_list = $result['list_id'];
         if ($genre != User::WATCHLIST)
             $sql = "SELECT serie_id FROM list2series WHERE list_id = :list_id";
