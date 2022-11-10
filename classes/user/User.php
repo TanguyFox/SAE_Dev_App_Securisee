@@ -12,9 +12,6 @@ class User
     private string $email;
     private string $password;
     private array $accounts;
-    private array $fav = [];
-    private array $watched = [];
-    private array $continue = [];
 
     public function __construct(string $n, string $p, string $mail, string $pwd){
         $this->nom=$n ?? "";

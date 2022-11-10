@@ -29,7 +29,7 @@ class SignInAction extends Action
                 $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
                 $mdp = filter_var($_POST['passw'], FILTER_SANITIZE_SPECIAL_CHARS);
                 if(isset($_SESSION['user']) or Auth::authenticate($email, $mdp))
-                    header('Location: ?action=accueil-catalogue');
+                    header('Location: ?action=user-home-page');
                 else
                     header('Location: ?action=signin&error=wrongCredentials');
 
