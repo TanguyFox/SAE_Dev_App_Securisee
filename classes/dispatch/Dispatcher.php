@@ -3,11 +3,10 @@
 namespace netvod\dispatch;
 
 use Exception;
-use netvod\action\AccessAccountAction;
 use netvod\action\AccueilCatalogueAction;
+use netvod\action\AddComAction;
 use netvod\action\AddFavSeriesAction;
 use netvod\action\AddNoteAction;
-use netvod\action\CreateProfilAction;
 use netvod\action\DefaultAction;
 use netvod\action\DisplayEpisodeDetailsAction;
 use netvod\action\DisplaySerieAction;
@@ -16,11 +15,10 @@ use netvod\action\SignInAction;
 use netvod\action\RegisterAction;
 use netvod\action\UserHomePageAction;
 
-class Dispatcher
-{
+class Dispatcher {
     private string $action;
 
-    public function __construct(string $action){
+    public function __construct(string $action) {
         //pages autorisees sans login utilisateur
         $aP1 = array(null,"signin","register"); //accueil et pages de connexion
 
@@ -37,8 +35,7 @@ class Dispatcher
         $this->action = $action;
     }
 
-    public function run(): void
-    {
+    public function run(): void {
         $action = match ($this->action) {
             'signin' => new SigninAction(),
             'register' => new RegisterAction(),
@@ -48,6 +45,7 @@ class Dispatcher
             'accueil-catalogue' => new AccueilCatalogueAction(),
             'add-fav-series' => new AddFavSeriesAction(),
 	        'add-note' => new AddNoteAction(),
+	        'add-com' => new AddComAction(),
             'user-home-page' => new UserHomePageAction(),
             default => new DefaultAction(),
         };

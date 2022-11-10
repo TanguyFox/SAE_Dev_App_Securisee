@@ -61,15 +61,24 @@ class User
         } else throw new InvalidPropertyNameException(" $attr: invalid property");
     }
 
-    public function addFavSeries(int $id):void{
+	/**
+	 * @throws InvalidPropertyValueException
+	 */
+	public function addFavSeries(int $id):void{
         if(!in_array($id, $this->fav)) array_push($this->fav,$id);
         else throw new InvalidPropertyValueException("Série déjà dans vos favoris");
     }
 
     public function addNote(int $id, int $note) : void {
         $db = ConnexionFactory::makeConnection();
-        $st = $db->prepare( "INSERT INTO avis (profil_id, episode_id, note) VALUES (:profil_id, :episode_id, :note)");
+        $st = $db->prepare( "INSERT INTO avis (user_id, serie_id, note) VALUES (:user_id, :serie_id, :note)");
         $st->execute([':profil_id' => $_SESSION['profil']->id, ':episode_id' => $id, ':note' => $note]);
     }
+
+	public function addCom(int $id, int $com) : void {
+		$db = ConnexionFactory::makeConnection();
+		$st = $db->prepare( "INSERT INTO avis (user_id, serie_id, commentaire) VALUES (:user_id, :serie_id, :commentaire)");
+		$st->execute([':user_id' => $_SESSION['user']->id, ':serie_id' => $id, ':commentaire' => $com]);
+	}
 
 }
