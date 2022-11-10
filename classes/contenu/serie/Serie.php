@@ -59,7 +59,7 @@ class Serie
     }
 
     public function getNote(): string{
-        $sql = "SELECT AVG(note) as moyenne FROM avis WHERE episode_id = :id";
+        $sql = "SELECT AVG(note) as moyenne FROM avis WHERE serie_id = :id";
         $stmt = ConnexionFactory::makeConnection()->prepare($sql);
         $stmt->execute(['id' => $this->id]);
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
