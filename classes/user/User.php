@@ -31,27 +31,6 @@ class User
         throw new InvalidPropertyNameException(" $attr: invalid property");
     }
 
-
-    /**
-     * @throws InvalidPropertyValueException
-     */
-    public function getAccount($accountId): Account
-    {
-        foreach($this->accounts as $account) {
-            if ($accountId == $account->id) return $account;
-        }
-        throw new InvalidPropertyValueException("Compte inexistant");
-    }
-
-    public function addAccount(Account $acc): void{
-        if($this->nbAccount <4) {
-            array_push($this->accounts, $acc);
-            $this->nbAccount++;
-        }else{
-            throw new \UserException(" Vous possédez déjà 4 comptes");
-        }
-    }
-
     /**
      * @throws InvalidPropertyNameException
      */
