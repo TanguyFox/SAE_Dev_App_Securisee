@@ -7,6 +7,10 @@ use netvod\db\ConnexionFactory;
 use netvod\exceptions\InvalidPropertyNameException;
 use netvod\exceptions\NonEditablePropertyException;
 
+define('FAV', 'lVideoPref');
+define('WATCHED', 'lVideoVisio');
+define('WATCHLIST', 'lVideoEnCours');
+
 class Serie
 {
     private int $id;
@@ -69,6 +73,19 @@ class Serie
             $note = "{$result['moyenne']}/10";
         }
         return $note;
+    }
+
+    public static function ajouterListe($serie_id, $user_id, $genre) : bool{
+        $sql = "SELECT id_list FROM user2list WHERE id_user = :id_user AND nom_genre = :genre";
+        $stmt = ConnexionFactory::makeConnection()->prepare($sql);
+        $stmt->execute(['id_user' => $user_id, 'genre' => $genre]);
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        $id_list = $result['id_list'];
+        $sql = "INSERT INTO list2series (id_list, id_series) VALUES (:id_list, :id_serie)";
+        $stmt = ConnexionFactory::makeConnection()->prepare($sql);
+        $stmt->execute(['id_list' => $id_list, 'id_serie' => $serie_id]);
+        if ($stmt->rowCount() == 1) return true;
+        else return false;
     }
 
 }

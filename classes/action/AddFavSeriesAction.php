@@ -3,7 +3,11 @@
 namespace netvod\action;
 
 use Exception;
+use netvod\contenu\serie\Serie;
+use netvod\db\ConnexionFactory;
 use netvod\user\User;
+
+define('FAV', 'favoris');
 
 class AddFavSeriesAction extends Action
 {
@@ -12,12 +16,10 @@ class AddFavSeriesAction extends Action
     {
         if (!isset($_SESSION['user']))
             header('Location: ?action=signin&error=notConnected');
-        $addfav =$_SESSION['catalogue'];
         $user = unserialize($_SESSION['user']);
         $user->addFavSeries($_GET['id']);
         $_SESSION['user'] = serialize($user);
-        $_SESSION['catalogue'] = $addfav;
-        $addfav .= "Série {$_GET['id']} ajoutée au favoris";
-        return $addfav;
+        Serie::ajouterListe($_GET['id'], $user->getId(),  );
+        return "Série {$_GET['id']} ajoutée au favoris";
     }
 }
