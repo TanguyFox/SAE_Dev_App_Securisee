@@ -13,28 +13,29 @@ class UserHomePageAction extends Action
 
     public function execute(): string
     {
-        if (!isset($_SESSION['user'])) {
+        if (!isset($_SESSION['user']))
             header('Location: ?action=signin&error=notConnected');
-            $user = unserialize($_SESSION['user']);
-            if ($user->prenom === "") {
-                $affiche = $user->email . "<br>";
-            } else {
-                $affiche = $user->prenom . "<br>";
-            }
+        $user = unserialize($_SESSION['user']);
+        if ($user->prenom === "") {
+            $affiche = $user->email . "<br>";
+        } else {
+            $affiche = $user->prenom . "<br>";
+        }
 
-            $html = <<<HTML
+        $html = <<<HTML
                 <div class="user_home_page">
                     <h2 style="text-align: center">Welcome {$affiche}</h2>
                         <h3 style="margin-left: 1em; text-decoration: underline">Vos favoris :</h3><br> 
                 </div>
 HTML;
-            $html .= $this->renderFavoris($user);
-        }
-            return $html;
-        }
+        $html .= $this->renderFavoris($user);
+        return $html;
+    }
 
 
-    private function renderFavoris(User $user): string {
+    private
+    function renderFavoris(User $user): string
+    {
         $html = "";
         $series = $user->getSeriesList(genre: User::FAV);
         if (empty($series))
@@ -45,7 +46,9 @@ HTML;
         return $html;
     }
 
-    private function renderWatchlist(User $user): string {
+    private
+    function renderWatchlist(User $user): string
+    {
         $html = "";
         $series = $user->getSeriesList(genre: User::WATCHLIST);
         if (empty($series))
