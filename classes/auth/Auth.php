@@ -3,6 +3,7 @@
 namespace netvod\auth;
 use netvod\db\ConnexionFactory;
 use netvod\exceptions\AuthException;
+use netvod\exceptions\UserException;
 use netvod\user\User;
 
 class Auth
@@ -10,6 +11,7 @@ class Auth
 
     /**
      * @throws AuthException
+     * @throws UserException
      */
     public static function authenticate(string $email, string $pwd): bool
     {
@@ -18,8 +20,9 @@ class Auth
         $st = $db->prepare( "SELECT * FROM utilisateur WHERE email = ?");
         $st->execute([$email]);
         $u = $st->fetch(\PDO::FETCH_ASSOC);
-	    if (!$u or !password_verify($pwd, $u['password'])) {
-		    throw new AuthException("Mot de passe ou email incorrect.");
+	    if (!$u) throw new UserException(" Il semblerait que vous n'avez pas de compte chez nous");
+        if(!password_verify($pwd, $u['password'])) {
+            throw new AuthException("Mot de passe ou email incorrect.");
 	    }
         $user = new User($u['nom'],$u['prenom'],$email, $u['password']);
         $_SESSION['user']=serialize($user);

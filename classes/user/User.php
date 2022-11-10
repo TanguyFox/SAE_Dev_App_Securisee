@@ -1,5 +1,6 @@
 <?php
 namespace netvod\user;
+use netvod\db\ConnexionFactory;
 use netvod\exceptions\InvalidPropertyNameException;
 use netvod\exceptions\InvalidPropertyValueException;
 
@@ -11,14 +12,15 @@ class User
     private string $email;
     private string $password;
     private array $accounts;
-    private int $nbAccount = 0;
+    private array $fav = [];
+    private array $watched = [];
+    private array $continue = [];
 
-    public function __construct(string $n, string $p, string $mail, string $pwd, array $account=[]){
+    public function __construct(string $n, string $p, string $mail, string $pwd){
         $this->nom=$n ?? "";
         $this->prenom=$p ?? "";
         $this->email=$mail;
         $this->password=$pwd;
-        $this->accounts=$account;
     }
 
     /**
@@ -58,4 +60,16 @@ class User
             $this->$attr = $value;
         } else throw new InvalidPropertyNameException(" $attr: invalid property");
     }
+
+    public function addFavSeries(int $id):void{
+        if(!in_array($id, $this->fav)) array_push($this->fav,$id);
+        else throw new InvalidPropertyValueException("Série déjà dans vos favoris");
+    }
+
+    public function addNote(int $id, int $note) : void {
+        $db = ConnexionFactory::makeConnection();
+        $st = $db->prepare( "INSERT INTO avis (profil_id, episode_id, note) VALUES (:profil_id, :episode_id, :note)");
+        $st->execute([':profil_id' => $_SESSION['profil']->id, ':episode_id' => $id, ':note' => $note]);
+    }
+
 }
