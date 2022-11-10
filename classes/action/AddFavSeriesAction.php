@@ -15,9 +15,7 @@ class AddFavSeriesAction extends Action
         if (!isset($_SESSION['user']))
             header('Location: ?action=signin&error=notConnected');
         $user = unserialize($_SESSION['user']);
-        $user->addFavSeries($_GET['id']);
-        $_SESSION['user'] = serialize($user);
-        User::ajouterListe($_GET['id'], $user->getId(), genre : FAV );
+        $user->ajouterListe($_GET['id'], $user, genre : USER::FAV );
         return "Série {$_GET['id']} ajoutée au favoris";
     }
 }
