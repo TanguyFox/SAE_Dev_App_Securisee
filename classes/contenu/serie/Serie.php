@@ -58,4 +58,17 @@ class Serie
         }
     }
 
+    public function getNote(): string{
+        $sql = "SELECT AVG(note) as moyenne FROM avis WHERE serie_id = :id";
+        $stmt = ConnexionFactory::makeConnection()->prepare($sql);
+        $stmt->execute(['id' => $this->id]);
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if(!$result || is_null($result['moyenne'])){
+            $note = "Non notée";
+        }else{
+            $note = "{$result['moyenne']}/10";
+        }
+        return $note;
+    }
+
 }

@@ -9,6 +9,6 @@ class AddNoteAction extends Action {
 		$_GET['note'] = $_GET['note'] ?? "";
 		$_GET['id'] = $_GET['id'] ?? "";
 		// requete sql pour ajouter la note
-		$_SESSION['profil']->addNote($_GET['id'], $_GET['note']);
+		$_SESSION['user']->addNote($_GET['id'], $_GET['note']);
 	}
 }

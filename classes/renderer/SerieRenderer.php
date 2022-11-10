@@ -22,7 +22,8 @@ class SerieRenderer implements Renderer
             <h5 class="card-title">'.$this->serie->titre.' <small> '.$this->serie->annee.' </small></h5>
             <p class="card-text">'.$this->serie->description.'</p>
             <p><small>'.$this->serie->date_ajout.'</small></p>
-            <a href="?action=add-fav-series" class="align-self-end btn btn-lg btn-block btn-primary">Ajouter a la série</a>
+            <p>Note : ' .$this->serie->getNote().'</p>
+            <a href="?action=add-fav-series&id='.$this->serie->id.'"  class="align-self-end btn btn-lg btn-block btn-primary" style="margin: 1rem">Ajouter aux favoris</a>
             <a href="?action=display-serie&id='.$this->serie->id.'" class="align-self-end btn btn-lg btn-block btn-primary">Details</a>
           </div>
         </div>
@@ -46,6 +47,7 @@ class SerieRenderer implements Renderer
             $renderer = new EpisodeRenderer($episode);
             $html .= $renderer->render(Renderer::COMPACT);
         }
+        $note = $this->serie->getNote();
         $html .= '</div>';
         return $html;
     }
