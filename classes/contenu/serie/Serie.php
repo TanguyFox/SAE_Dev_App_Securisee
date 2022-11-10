@@ -94,9 +94,10 @@ class Serie
 	}
 
     public static function getSerieFromKeyWords(string $keyWords): array{
-        $sql = "SELECT * FROM serie WHERE titre LIKE :keyWords OR descriptif LIKE :keyWords";
+        $sql = "SELECT * FROM serie WHERE titre LIKE ? OR descriptif LIKE ?";
+        $keyWords = "%$keyWords%";
         $stmt = ConnexionFactory::makeConnection()->prepare($sql);
-        $stmt->execute(['keyWords' => "%$keyWords%"]);
+        $stmt->execute([$keyWords, $keyWords]);
         $result = $stmt->fetchAll();
         $series = [];
         foreach($result as $serie){

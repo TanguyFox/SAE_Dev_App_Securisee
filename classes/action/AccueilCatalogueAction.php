@@ -27,7 +27,7 @@ END;
             return $catalogue;
         } else {
 
-            $keywords = explode(" ",$search);
+            $keywords = explode(" ", $_POST['search']);
             $series = [];
             foreach ($keywords as $words){
                $series = array_merge($series, Serie::getSerieFromKeyWords($words));

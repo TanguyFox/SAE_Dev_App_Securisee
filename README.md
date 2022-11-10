@@ -16,15 +16,15 @@
 | 10. Lors de l’affichage d’une série, indiquer sa note moyenne et donner accès aux commentaires                | Tanguy, Jules | ok     |
 
 ## Fonctionnalités étendues :
-| Fonctionnalité                                                                                               | Auteur       | Statut   |
-|--------------------------------------------------------------------------------------------------------------|--------------|----------|
-| 11. Activation de compte                                                                                     | ?            | Non      |
-| 17. gestion du profil de l’utilisateur : ajouter des informations (nom, prénom, genre préféré ...)           | Tanguy       | Oui      |
-| 12. Recherche dans le catalogue par mots clés                                                                | Tanguy, Théo | En Cours |
-| 13. Tri dans le catalogue                                                                                    | ?            | Non      |
-| 14. filtrage du catalogue par genre, par public                                                              | ?            | Non      |
-| 15. gestion de la liste de préférence : retrait                                                              | ?            | Non      |
-| 16. Gestion de la liste « déjà visionnées »                                                                  | ?            | Non      |
-| 18. accès direct à l’épisode à visionner lorsque l’on visualise une série qui est dans la liste « en cours » | ?            | Non      |
-| 19. Tri dans le catalogue selon la note moyenne                                                              | ?            | Non      |
-| 20. mot de passe oublié                                                                                      | ?            | Non      |
+| Fonctionnalité                                                                                               | Auteur       | Statut |
+|--------------------------------------------------------------------------------------------------------------|--------------|--------|
+| 11. Activation de compte                                                                                     | ?            | Non    |
+| 17. gestion du profil de l’utilisateur : ajouter des informations (nom, prénom, genre préféré ...)           | Tanguy       | Ok     |
+| 12. Recherche dans le catalogue par mots clés                                                                | Tanguy, Théo | Ok     |
+| 13. Tri dans le catalogue                                                                                    | ?            | Non    |
+| 14. filtrage du catalogue par genre, par public                                                              | ?            | Non    |
+| 15. gestion de la liste de préférence : retrait                                                              | ?            | Non    |
+| 16. Gestion de la liste « déjà visionnées »                                                                  | ?            | Non    |
+| 18. accès direct à l’épisode à visionner lorsque l’on visualise une série qui est dans la liste « en cours » | ?            | Non    |
+| 19. Tri dans le catalogue selon la note moyenne                                                              | ?            | Non    |
+| 20. mot de passe oublié                                                                                      | ?            | Non    |
