@@ -2,9 +2,11 @@
 
 namespace netvod\user;
 
+use Exception;
 use netvod\contenu\serie\Serie;
 use netvod\db\ConnexionFactory;
 use netvod\exceptions\InvalidPropertyNameException;
+use PDOException;
 
 
 class User
@@ -50,17 +52,21 @@ class User
     public function ajouterListe(int $serie_id, User $user, $genre): void
     {
         if ($this->getSeriesList($genre) == []) {
-            echo "create";
             $this->createSerieList($user, $genre);
         }
-        echo "update";
         $user_id = $user->getIdFromDb();
         $db = ConnexionFactory::makeConnection();
         $st = $db->prepare("SELECT list_id FROM user2list WHERE user_id = :user_id AND nom_genre = :genre");
         $st->execute(['user_id' => $user_id, 'genre' => $genre]);
         $list_id = $st->fetch()['list_id'];
         $st = $db->prepare("INSERT INTO list2series (list_id, serie_id) VALUES (:list_id, :serie_id)");
-        $st->execute(['list_id' => $list_id, 'serie_id' => $serie_id]);
+        echo $st->setFetchMode(\PDO::ERRMODE_EXCEPTION);
+        try {
+            $st->execute(['list_id' => $list_id, 'serie_id' => $serie_id]);
+            header('Location: ?action=accueil-catalogue');
+        } catch (PDOException $e) {
+            header('Location: ?action=accueil-catalogue&error=alreadyInList');
+        }
     }
 
 

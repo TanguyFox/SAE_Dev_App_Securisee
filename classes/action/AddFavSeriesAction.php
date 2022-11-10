@@ -16,7 +16,6 @@ class AddFavSeriesAction extends Action
             header('Location: ?action=signin&error=notConnected');
         $user = unserialize($_SESSION['user']);
         $user->ajouterListe($_GET['id'], $user, genre : USER::FAV );
-        header('Location: ?action=accueil-catalogue');
         return "";
     }
 }

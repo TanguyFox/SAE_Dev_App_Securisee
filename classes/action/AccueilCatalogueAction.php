@@ -22,7 +22,7 @@ class AccueilCatalogueAction extends Action
             <form method='post' action='?action=accueil-catalogue'>
                 <label>Recherche : <input type="search" name="search"></label>
             </form> 
-            {$catalogueRenderer->render(Renderer::LONG)};
+            {$catalogueRenderer->render(Renderer::LONG)}
 END;
             return $catalogue;
         } else {
