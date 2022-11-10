@@ -25,6 +25,7 @@ class UserHomePageAction extends Action
         $html = <<<HTML
                 <div class="user_home_page">
                     <h2 style="text-align: center">Welcome {$affiche}</h2>
+                    <p style="text-align: center"> Votre genre préféré est {$user->genre_pref} </p>
                         <h3 style="margin-left: 1em; text-decoration: underline">Vos favoris :</h3><br> 
                 </div>
 HTML;
