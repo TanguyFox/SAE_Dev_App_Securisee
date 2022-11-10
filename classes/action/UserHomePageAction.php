@@ -27,30 +27,6 @@ class UserHomePageAction extends Action
                         Vos favoris :<br> 
 HTML;
 
-        if(empty($utilisateur->fav)){
-            $html .= "Aucun favoris pour le moment...<br>";
-        }else{
-            foreach ($utilisateur->fav as $series){
-                $html .= "{$series->id} - $series->titre";
-            }
-        }
-        $html .= "Visionné <br>";
-        if(empty($utilisateur->watched)){
-            $html .= "Aucun programme vu entièrement<br>";
-        }else{
-            foreach ($utilisateur->watched as $series){
-                $html .= "{$series->id} - $series->titre";
-            }
-        }
-
-        $html .= "Reprendre<br>";
-        if(empty($utilisateur->continue)){
-            $html .= "Aucun programme à reprendre<br>";
-        }else{
-            foreach ($utilisateur->continue as $series){
-                $html .= "{$series->id} - $series->titre";
-            }
-        }
         return $html;
     }
 }
