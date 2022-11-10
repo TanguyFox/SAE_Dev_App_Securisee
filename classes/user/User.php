@@ -20,14 +20,15 @@ class User
     private string $prenom;
     private string $email;
     private string $password;
-    private string $genre_pref = "Aucun";
+    private string $genre_pref;
 
-    public function __construct(string $n, string $p, string $mail, string $pwd)
+    public function __construct(string $n, string $p, string $mail, string $pwd,string $genre="Aucun")
     {
         $this->nom = $n ?? "";
         $this->prenom = $p ?? "";
         $this->email = $mail;
         $this->password = $pwd;
+        $this->genre_pref = $genre ;
     }
 
     /**
