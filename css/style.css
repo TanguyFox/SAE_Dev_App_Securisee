@@ -10,6 +10,10 @@
     background:#E0E001;
 }
 
-#glob {
-    display: flex;
+.form_c {
+    display: inline-block;
+}
+.button_c{
+    border: none !important;
+    padding: 0 !important;
 }
