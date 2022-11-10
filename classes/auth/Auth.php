@@ -24,7 +24,7 @@ class Auth
         if(!password_verify($pwd, $u['password'])) {
             throw new AuthException("Mot de passe ou email incorrect.");
 	    }
-        $user = new User($u['nom'],$u['prenom'],$email, $u['password']);
+        $user = new User($u['nom'],$u['prenom'],$email, $u['password'], $u['genre_pref']);
         $_SESSION['user']=serialize($user);
         return true;
     }
