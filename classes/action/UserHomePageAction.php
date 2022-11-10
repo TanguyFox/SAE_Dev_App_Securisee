@@ -13,7 +13,7 @@ class UserHomePageAction extends Action
     {
         if (!isset($_SESSION['user']))
             header('Location: ?action=signin&error=notConnected');
-        $user = $_SESSION['user'];
+        $user = unserialize($_SESSION['user']);
         if ($user->prenom === "")
             $affiche = $user->email;
         else
