@@ -41,6 +41,7 @@ HTML;
             if ($_POST['password'] !== $_POST['password2'])
                 throw new AuthException("Les mots de passe ne correspondent pas");
             $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+            $email =filter_var($email, FILTER_VALIDATE_EMAIL);
             $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
             Auth::register($email, $password);
         } catch (Exception $e) {

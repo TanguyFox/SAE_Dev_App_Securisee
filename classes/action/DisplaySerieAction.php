@@ -77,10 +77,11 @@ class DisplaySerieAction extends Action {
         } else {
 	        $u = unserialize($_SESSION['user']);
 			if (isset($_POST['note'])) {
+                $note = filter_var($_POST['note'], FILTER_SANITIZE_NUMBER_INT);
 				$u->addNote($_GET['id'], $_POST['note']);
 			}
 			if (isset($_POST['com'])) {
-				$com = filter_var($_POST['com'], FILTER_SANITIZE_STRING);
+				$com = filter_var($_POST['com'], FILTER_SANITIZE_SPECIAL_CHARS);
 				$u->addCom($_POST['id'], $com);
 			}
             header("Location: ?action=display-serie&id=" . $_GET['id']);

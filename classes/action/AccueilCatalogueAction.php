@@ -30,8 +30,8 @@ class AccueilCatalogueAction extends Action
 END;
             return $catalogue;
         } else {
-
-            $keywords = explode(" ", $_POST['search']);
+            $search = filter_var($_POST['search'], FILTER_SANITIZE_SPECIAL_CHARS);
+            $keywords = explode(" ", $search);
             $series = [];
             foreach ($keywords as $words){
                $series = array_merge($series, Serie::getSerieFromKeyWords($words));
