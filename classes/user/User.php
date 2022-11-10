@@ -9,8 +9,7 @@ use netvod\exceptions\InvalidPropertyNameException;
 use PDOException;
 
 
-class User
-{
+class User {
 
     const FAV = 'lVideoPref';
     const WATCHED = 'lVideoVisio';
@@ -22,8 +21,7 @@ class User
     private string $password;
     private string $genre_pref = "Aucun";
 
-    public function __construct(string $n, string $p, string $mail, string $pwd)
-    {
+    public function __construct(string $n, string $p, string $mail, string $pwd) {
         $this->nom = $n ?? "";
         $this->prenom = $p ?? "";
         $this->email = $mail;
@@ -33,8 +31,7 @@ class User
     /**
      * @throws InvalidPropertyNameException
      */
-    public function __get(string $attr): mixed
-    {
+    public function __get(string $attr): mixed {
         if (property_exists($this, $attr)) return $this->$attr;
         throw new InvalidPropertyNameException(" $attr: invalid property");
     }
@@ -42,15 +39,13 @@ class User
     /**
      * @throws InvalidPropertyNameException
      */
-    public function __set(string $attr, mixed $value): void
-    {
+    public function __set(string $attr, mixed $value): void {
         if (property_exists($this, $attr)) {
             $this->$attr = $value;
         } else throw new InvalidPropertyNameException(" $attr: invalid property");
     }
 
-    public function ajouterListe(int $serie_id, User $user, $genre): void
-    {
+    public function ajouterListe(int $serie_id, User $user, $genre): void {
         if ($this->getSeriesList($genre) == []) {
             $this->createSerieList($user, $genre);
         }
@@ -70,16 +65,14 @@ class User
     }
 
 
-    public function updateInfos(): void
-    {
+    public function updateInfos(): void {
         $db = ConnexionFactory::makeConnection();
         $st = $db->prepare("UPDATE utilisateur SET nom=?, prenom=?, genre_pref=?");
         $st->execute([$this->nom, $this->prenom, $this->genre_pref]);
     }
 
 
-    public function addNote(int $id, int $note): void
-    {
+    public function addNote(int $id, int $note): void {
         $sql = "SELECT * FROM avis WHERE avis.serie_id = :id AND avis.user_id = :user_id";
         $stmt = ConnexionFactory::makeConnection()->prepare($sql);
         $stmt->execute(['id' => $id, 'user_id' => $this->getIdFromDb()]);
@@ -93,8 +86,7 @@ class User
         $stmt->execute(['id' => $id, 'user_id' => $this->getIdFromDb(), 'note' => $note]);
     }
 
-    public function addCom(int $id, string $com): void
-    {
+    public function addCom(int $id, string $com): void {
         $sql = "SELECT * FROM avis WHERE avis.serie_id = :id AND avis.user_id = :user_id";
         $stmt = ConnexionFactory::makeConnection()->prepare($sql);
         $stmt->execute(['id' => $id, 'user_id' => $this->getIdFromDb()]);
@@ -108,8 +100,7 @@ class User
         $stmt->execute(['id' => $id, 'user_id' => $this->getIdFromDb(), 'com' => $com]);
     }
 
-    public function getIdFromDb(): int
-    {
+    public function getIdFromDb(): int {
         $db = ConnexionFactory::makeConnection();
         $st = $db->prepare("SELECT id FROM utilisateur WHERE email = :email");
         $st->execute([':email' => $this->email]);
@@ -117,8 +108,7 @@ class User
         return $result['id'];
     }
 
-    public function updateEpisodeProgress(int $id, float $time): void
-    {
+    public function updateEpisodeProgress(int $id, float $time): void {
         //Is there already a listevideoencours (progress) for this episode?
         //If no, create it
         //If yes, update it
@@ -155,8 +145,7 @@ class User
         }
     }
 
-    public function recupererAvancement(int $id): int
-    {
+    public function recupererAvancement(int $id): int {
         $db = ConnexionFactory::makeConnection();
         $st = $db->prepare("SELECT * FROM listencours INNER JOIN user2list 
                                                                     ON user2list.nom_genre='listevideoencours'
@@ -170,8 +159,7 @@ class User
         return (is_array($result) && array_key_exists('tpsVisio', $result)) ? $result['tpsVisio'] : 0;
     }
 
-    public function getSeriesList(string $genre): array
-    {
+    public function getSeriesList(string $genre): array {
         $user_id = $this->getIdFromDb();
         $sql = "SELECT list_id FROM user2list WHERE  user_id = :user_id AND nom_genre = :genre";
         $stmt = ConnexionFactory::makeConnection()->prepare($sql);
@@ -192,11 +180,19 @@ class User
         return $series;
     }
 
-    private function createSerieList(User $user, string $genre): void
-    {
+    private function createSerieList(User $user, string $genre): void {
         $user_id = $user->getIdFromDb();
         $db = ConnexionFactory::makeConnection();
         $st = $db->prepare("INSERT INTO user2list (user_id, nom_genre) VALUES (:user_id, :genre)");
         $st->execute(['user_id' => $user_id, 'genre' => $genre]);
     }
+
+	public function supprimerListe(int $serie_id, User $user, $genre): void {
+		$user_id = $user->getIdFromDb();
+		$db = ConnexionFactory::makeConnection();
+		$st = $db->prepare("DELETE FROM list2series WHERE serie_id=:serie_id AND list_id=(
+			SELECT list_id FROM user2list WHERE user_id=:user_id AND nom_genre=:genre
+		)");
+		$st->execute(['serie_id' => $serie_id, 'user_id' => $user_id, 'genre' => $genre]);
+	}
 }
