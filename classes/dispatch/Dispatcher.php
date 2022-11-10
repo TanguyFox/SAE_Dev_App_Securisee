@@ -6,6 +6,7 @@ use Exception;
 use netvod\action\AccueilCatalogueAction;
 use netvod\action\AddFavSeriesAction;
 use netvod\action\DefaultAction;
+use netvod\action\DeleteFavSeriesAction;
 use netvod\action\DisplayEpisodeDetailsAction;
 use netvod\action\DisplaySerieAction;
 use netvod\action\GestionUtilisateurAction;
@@ -47,6 +48,7 @@ class Dispatcher {
             'user-home-page' => new UserHomePageAction(),
             'gestion-utilisateur' => new GestionUtilisateurAction(),
             'update-episode-progress' => new UpdateEpisodeProgressAction(),
+	        'delete-fav-series' => new DeleteFavSeriesAction(),
             default => new DefaultAction(),
         };
         try {
