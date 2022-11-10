@@ -15,6 +15,10 @@ class AccueilCatalogueAction extends Action
      */
     public function execute(): string
     {
+        if(!isset($_SESSION['user'])){
+            header("Location: ?action=signin");
+        }
+
         $catalogueRenderer = new CatalogueRenderer();
         if ($this->http_method == 'GET') {
 

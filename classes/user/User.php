@@ -20,7 +20,7 @@ class User
     private string $prenom;
     private string $email;
     private string $password;
-    private string $genre_pref = "";
+    private string $genre_pref = "Aucun";
 
     public function __construct(string $n, string $p, string $mail, string $pwd)
     {

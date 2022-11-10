@@ -12,25 +12,31 @@ class UserHomePageAction extends Action
 
     public function execute(): string
     {
-        if (!isset($_SESSION['user']))
+       if (!isset($_SESSION['user'])) {
             header('Location: ?action=signin&error=notConnected');
-        $user = unserialize($_SESSION['user']);
-        if ($user->prenom === "")
-            $affiche = $user->email;
-        else
-            $affiche = $user->prenom;
+        } else {
 
-        $html = <<<HTML
+
+           $user = unserialize($_SESSION['user']);
+           if ($user->prenom === "") {
+               $affiche = $user->email . "<br>";
+           } else {
+               $affiche = $user->prenom . "<br>";
+           }
+
+           $html = <<<HTML
                     <h1>Home Page</h1>
                     <p>Welcome {$affiche}</p>
-
+                        Votre genre préféré : {$user->genre_pref}
                         <a href='?action=accueil-catalogue' type='button' class='btn btn-primary'>Catalogue</a><br>
                         <a href='?action=gestion-utilisateur' type='button' class='btn btn-primary'>Gestion du profil</a><br>
                         Vos favoris :<br> 
 HTML;
-        $html .= $this->renderFavoris($user);
-        return $html;
+           $html .= $this->renderFavoris($user);
+       }
+            return $html;
     }
+
 
     private function renderFavoris(User $user): string {
         $html = "";
