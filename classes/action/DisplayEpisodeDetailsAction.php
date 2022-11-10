@@ -12,18 +12,27 @@ class DisplayEpisodeDetailsAction extends Action {
         $html = '';
         if ($this->http_method == 'GET') {
             $html .= (new EpisodeRenderer(Episode::getEpisodeFromId($_GET['id'])))->render(Renderer::LONG);
-            // ajouter le code javascript pour récupérer l'avancement de la video quand l'utilisateur quite la page
             $html .= '
             <script>
-                window.onbeforeunload = function(){
-                    var video = document.querySelector("video");
-                    var time = video.currentTime;
-                    var id = '.$_GET['id'].';
+                //get the video by id
+                var video = document.getElementById("video");
+                
+                //get the video advancement from index?action=update-episode-progress with a get request
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "index.php?action=update-episode-progress&id=' . $_GET['id'] . '", false);
+                xhr.send();
+                  //take response from xhr and extract from the div by id="avancement" and convert it to a number then set the video advancement to it
+                var avancement = parseFloat(xhr.responseText.split("<div id=\"avancement\">")[1].split("</div>")[0]);
+                video.currentTime = avancement;
+
+                function update(){
+                    //send the post request
                     var xhr = new XMLHttpRequest();
-                    xhr.open("POST", "?action=UpdateEpisodeProgressAction", true);
-                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                    xhr.send("id="+id+"&time="+time);
-                };
+                    xhr.open("POST", "index.php?action=update-episode-progress",false);
+                    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    xhr.send("id=' .$_GET['id'].'&avancement="+video.currentTime);
+                }
+                setInterval(update, 5000);
             </script>
             ';
         }

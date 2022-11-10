@@ -14,6 +14,7 @@ use netvod\action\GestionUtilisateurAction;
 use netvod\action\LogoutAction;
 use netvod\action\SignInAction;
 use netvod\action\RegisterAction;
+use netvod\action\UpdateEpisodeProgressAction;
 use netvod\action\UserHomePageAction;
 
 class Dispatcher {
@@ -49,6 +50,7 @@ class Dispatcher {
 	        'add-com' => new AddComAction(),
             'user-home-page' => new UserHomePageAction(),
             'gestion-utilisateur' => new GestionUtilisateurAction(),
+            'update-episode-progress' => new UpdateEpisodeProgressAction(),
             default => new DefaultAction(),
         };
         try {
