@@ -5,6 +5,7 @@ namespace netvod\action;
 use netvod\contenu\serie\Serie;
 use netvod\renderer\Renderer;
 use netvod\renderer\SerieRenderer;
+use netvod\user\User;
 
 class UserHomePageAction extends Action
 {
@@ -27,30 +28,16 @@ class UserHomePageAction extends Action
                         <a href='?action=gestion-utilisateur' type='button' class='btn btn-primary'>Gestion du profil</a><br>
                         Vos favoris :<br> 
 HTML;
+        $html .= $this->renderFavoris($user);
+        return $html;
+    }
 
-        if(empty($utilisateur->fav)){
-            $html .= "Aucun favoris pour le moment...<br>";
-        }else{
-            foreach ($utilisateur->fav as $series){
-                $html .= "{$series->id} - $series->titre";
-            }
-        }
-        $html .= "Visionné <br>";
-        if(empty($utilisateur->watched)){
-            $html .= "Aucun programme vu entièrement<br>";
-        }else{
-            foreach ($utilisateur->watched as $series){
-                $html .= "{$series->id} - $series->titre";
-            }
-        }
-
-        $html .= "Reprendre<br>";
-        if(empty($utilisateur->continue)){
-            $html .= "Aucun programme à reprendre<br>";
-        }else{
-            foreach ($utilisateur->continue as $series){
-                $html .= "{$series->id} - $series->titre";
-            }
+    private function renderFavoris(mixed $user): string
+    {
+        $html = "";
+        $series = User::getSeriesList(genre: Serie::FAV);
+        foreach ($series as $serie) {
+            $html .= (new SerieRenderer($serie))->render(Renderer::COMPACT);
         }
         return $html;
     }
