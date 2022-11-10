@@ -13,8 +13,8 @@ class UserHomePageAction extends Action
     {
         if (!isset($_SESSION['user']))
             header('Location: ?action=signin&error=notConnected');
-        $user = unserialize($_SESSION['user']);
-        if (empty($user->prenom))
+        $user = $_SESSION['user'];
+        if ($user->prenom === "")
             $affiche = $user->email;
         else
             $affiche = $user->prenom;
@@ -24,6 +24,7 @@ class UserHomePageAction extends Action
                     <p>Welcome {$affiche}</p>
 
                         <a href='?action=accueil-catalogue' type='button' class='btn btn-primary'>Catalogue</a><br>
+                        <a href='?action=gestion-utilisateur' type='button' class='btn btn-primary'>Gestion du profil</a><br>
                         Vos favoris :<br> 
 HTML;
 
