@@ -10,6 +10,7 @@ use netvod\action\AddNoteAction;
 use netvod\action\DefaultAction;
 use netvod\action\DisplayEpisodeDetailsAction;
 use netvod\action\DisplaySerieAction;
+use netvod\action\GestionUtilisateurAction;
 use netvod\action\LogoutAction;
 use netvod\action\SignInAction;
 use netvod\action\RegisterAction;
@@ -47,6 +48,7 @@ class Dispatcher {
 	        'add-note' => new AddNoteAction(),
 	        'add-com' => new AddComAction(),
             'user-home-page' => new UserHomePageAction(),
+            'gestion-utilisateur' => new GestionUtilisateurAction(),
             default => new DefaultAction(),
         };
         try {

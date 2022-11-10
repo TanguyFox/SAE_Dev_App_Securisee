@@ -7,6 +7,7 @@ class GestionUtilisateurAction extends Action
 
     public function execute(): string
     {
+        $html="";
         if(!isset($_SESSION['user'])){
             $html = "Non connecté";
         }
@@ -31,18 +32,18 @@ class GestionUtilisateurAction extends Action
 END;
 
         }else{
-            $name = filter_var($_POST['name'],FILTER_SANITIZE_SPECIAL_CHARS);
+            $name = filter_var($_POST['name_user'],FILTER_SANITIZE_SPECIAL_CHARS);
             $first_name = filter_var($_POST['first_name'], FILTER_SANITIZE_SPECIAL_CHARS);
             $genre_pr = $_POST['genre_pref'];
 
-            $user = unserialize($_SESSION['user']);
-            $user->nom = $name;
-            $user->prenom = $first_name;
-            $user->genre_pref = $genre_pr;
+            //$user = unserialize($_SESSION['user']);
+            $_SESSION['user']->nom = $name;
+            $_SESSION['user']->prenom = $first_name;
+            $_SESSION['user']->genre_pref = $genre_pr;
 
-            $user->updateInfos();
+            $_SESSION['user']->updateInfos();
 
-            $html = "Vos informations ont bien été enregistrées";
+            $html .= "Vos informations ont bien été enregistrées";
         }
 
         return $html;

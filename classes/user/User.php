@@ -11,7 +11,7 @@ class User
     private string $prenom;
     private string $email;
     private string $password;
-    private array $accounts;
+    private string $genre_pref="";
 
     public function __construct(string $n, string $p, string $mail, string $pwd){
         $this->nom=$n ?? "";
@@ -56,6 +56,12 @@ class User
         if ( property_exists ($this, $attr) ) {
             $this->$attr = $value;
         } else throw new InvalidPropertyNameException(" $attr: invalid property");
+    }
+
+    public function updateInfos():void{
+        $db = ConnexionFactory::makeConnection();
+        $st = $db->prepare("UPDATE utilisateur SET nom=?, prenom=?, genre_pref=?");
+        $st->execute([$this->nom,$this->prenom,$this->genre_pref]);
     }
 
 	/**
