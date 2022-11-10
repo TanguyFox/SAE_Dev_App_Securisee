@@ -21,17 +21,20 @@ class Dispatcher
     private string $action;
 
     public function __construct(string $action){
-        //pages autorisees sans login utilisateur (et du coup sans profil)
-        $aP1 = array(null,"signin","register"); //acceuil et pages de connexion
+        //pages autorisees sans login utilisateur
+        $aP1 = array(null,"signin","register"); //accueil et pages de connexion
 
-        //pages autorisees avec login utilisateur (et sans profil), doit pouvoir acceder a la page de creation et de sélection de profil
-        $aP2 = array_merge($aP1, array("logout","create-profil"));
-        if(!isset($_SESSION['user']) and !in_array($action, $aP1)) {
-            $this->action = "signin";
-        }else{
-            $this->action = $action; //action validée
-
+        //pages autorisees quand utilisateur deconnecte
+        if (!isset($_SESSION['user'])) {
+            if (!in_array($action, $aP1)) {
+                header('Location: ?action=signin&error=notConnected');
+            }
+        } else { //pages autorisees quand utilisateur connecte
+            if (in_array($action, $aP1)) {
+                header('Location: ?action=accueil-catalogue');
+            }
         }
+        $this->action = $action;
     }
 
     public function run(): void
@@ -40,8 +43,6 @@ class Dispatcher
             'signin' => new SigninAction(),
             'register' => new RegisterAction(),
             'logout' => new LogoutAction(),
-            'create-profil' => new CreateProfilAction(),
-            'access-account' => new AccessAccountAction(),
             'display-episode-details' => new DisplayEpisodeDetailsAction(),
             'display-serie' => new DisplaySerieAction(),
             'accueil-catalogue' => new AccueilCatalogueAction(),
@@ -75,10 +76,10 @@ class Dispatcher
                 </style>
             ';
         $content .= $html;
-        if ($this->action != "user-home-page") {
-            $content .= '<a href="?action=accueil-catalogue" class="btn btn-primary centerFooter">Home</a>';
-        }
+
         if(isset($_SESSION['user'])) {
+            if ($this->action != "user-home-page")
+                $content .= '<a href="?action=user-home-page" class="btn btn-primary centerFooter">Home</a>';
             $content .= '<a href="?action=logout" class="btn btn-danger centerFooter">Logout</a>';
         }
         $content .= '</body></html>';
