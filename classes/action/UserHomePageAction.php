@@ -30,9 +30,12 @@ class UserHomePageAction extends Action
                         Votre genre préféré : {$user->genre_pref}
                         <a href='?action=accueil-catalogue' type='button' class='btn btn-primary'>Catalogue</a><br>
                         <a href='?action=gestion-utilisateur' type='button' class='btn btn-primary'>Gestion du profil</a><br>
-                        Vos favoris :<br> 
+                        Vos favoris :<br>  
+                        {$this->renderFavoris($user)}<br>
+                        Reprendre la lecture :<br>
+                        {$this->renderWatchlist($user)}<br>
 HTML;
-           $html .= $this->renderFavoris($user);
+
        }
             return $html;
     }

@@ -17,10 +17,11 @@ class GestionUtilisateurAction extends Action
                 <label>Nom : <input type="text" name="name_user" autofocus></label>
                 <label>Prénom : <input type="text" name="first_name"></label>
                 <select name="genre_pref">
+                    <option value=""> </option>
                     <option value="action">Action</option>
                     <option value="comedie">Comédie</option>
                     <option value="horreur">Horreur</option>
-                    <option value="htriller">Thriller</option>
+                    <option value="thriller">Thriller</option>
                     <option value="suspense">Suspense</option>
                     <option value="animation">Animation</option>
                     <option value="histoire">Histoire</option>
@@ -31,19 +32,26 @@ class GestionUtilisateurAction extends Action
             </form>
 END;
 
-        }else{
-            $name = filter_var($_POST['name_user'],FILTER_SANITIZE_SPECIAL_CHARS);
-            $first_name = $_POST['first_name'];
-            $genre_pr = $_POST['genre_pref'];
-
+        }else {
             $user = unserialize($_SESSION['user']);
-            $user->nom = $name;
-            $user->prenom = $first_name;
-            $user->genre_pref = $genre_pr;
+            if ($_POST['name_user'] !== "") {
+                $name = filter_var($_POST['name_user'], FILTER_SANITIZE_SPECIAL_CHARS);
+                $user->nom = $name;
+            }
+            if ($_POST['first_name'] !== ""){
+                $first_name = filter_var($_POST['first_name'], FILTER_SANITIZE_SPECIAL_CHARS);
+                $user->prenom = $first_name;
+            }
+            if($_POST['genre_pref'] !== ""){
+                $genre_pr = $_POST['genre_pref'];
+                $user->genre_pref = $genre_pr;
+            }
 
             $user->updateInfos();
 
-            $html .= "Vos informations ont bien été enregistrées";
+            $_SESSION['user'] = serialize($user);
+
+            $html .= "Vos informations ont bien été enregistrées<br> Votre genre préféré est $user->genre_pref";
         }
 
         return $html;
