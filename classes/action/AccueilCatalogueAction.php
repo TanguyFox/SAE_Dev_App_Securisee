@@ -15,13 +15,24 @@ class AccueilCatalogueAction extends Action
      */
     public function execute(): string
     {
+        $catalogueRenderer = new CatalogueRenderer();
         if ($this->http_method == 'GET') {
-            $CatalogueRenderer = new CatalogueRenderer();
-            $catalogue = $CatalogueRenderer->render(Renderer::LONG);
-            $_SESSION['catalogue']=  $catalogue;
+
+            $catalogue = <<<END
+            <form method='post' action='?action=accueil-catalogue'>
+                <label>Recherche : <input type="search" name="search"></label>
+            </form> 
+            {$catalogueRenderer->render(Renderer::LONG)};
+END;
             return $catalogue;
         } else {
-            throw new \Exception('Méthode HTTP non autorisée');
+
+            $keywords = explode(" ",$search);
+            $series = [];
+            foreach ($keywords as $words){
+               $series = array_merge($series, Serie::getSerieFromKeyWords($words));
+            }
         }
+        return $catalogueRenderer->renderSearch($series);
     }
 }
