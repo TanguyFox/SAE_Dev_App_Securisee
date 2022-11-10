@@ -88,21 +88,4 @@ class Serie
         else return false;
     }
 
-    public static function getSeriesList($genre) : array{
-        $sql = "SELECT list_id FROM user2list WHERE  user_id = :user_id AND nom_genre = :genre";
-        $stmt = ConnexionFactory::makeConnection()->prepare($sql);
-        $stmt->execute(['genre' => $genre]);
-        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
-        $id_list = $result['list_id'];
-        $sql = "SELECT serie_id FROM list2series WHERE list_id = :list_id";
-        $stmt = ConnexionFactory::makeConnection()->prepare($sql);
-        $stmt->execute(['list_id' => $id_list]);
-        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        $series = [];
-        foreach($result as $serie){
-            $series[] = Serie::getSerieFromId($serie['serie_id']);
-        }
-        return $series;
-    }
-
 }

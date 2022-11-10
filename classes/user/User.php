@@ -1,5 +1,6 @@
 <?php
 namespace netvod\user;
+use netvod\contenu\serie\Serie;
 use netvod\db\ConnexionFactory;
 use netvod\exceptions\InvalidPropertyNameException;
 use netvod\exceptions\InvalidPropertyValueException;
@@ -11,7 +12,6 @@ class User
     private string $prenom;
     private string $email;
     private string $password;
-    private array $accounts;
 
     public function __construct(string $n, string $p, string $mail, string $pwd){
         $this->nom=$n ?? "";
@@ -77,5 +77,22 @@ class User
 		$st = $db->prepare( "INSERT INTO avis (user_id, serie_id, commentaire) VALUES (:user_id, :serie_id, :commentaire)");
 		$st->execute([':user_id' => $_SESSION['user']->id, ':serie_id' => $id, ':commentaire' => $com]);
 	}
+
+    public static function getSeriesList($genre) : array{
+        $sql = "SELECT list_id FROM user2list WHERE  user_id = :user_id AND nom_genre = :genre";
+        $stmt = ConnexionFactory::makeConnection()->prepare($sql);
+        $stmt->execute(['genre' => $genre]);
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        $id_list = $result['list_id'];
+        $sql = "SELECT serie_id FROM list2series WHERE list_id = :list_id";
+        $stmt = ConnexionFactory::makeConnection()->prepare($sql);
+        $stmt->execute(['list_id' => $id_list]);
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $series = [];
+        foreach($result as $serie){
+            $series[] = Serie::getSerieFromId($serie['serie_id']);
+        }
+        return $series;
+    }
 
 }
