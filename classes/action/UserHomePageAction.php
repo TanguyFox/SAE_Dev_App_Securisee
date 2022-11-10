@@ -48,4 +48,15 @@ HTML;
         }
         return $html;
     }
+
+    private function renderWatchlist(User $user): string {
+        $html = "";
+        $series = $user->getSeriesList(genre: User::WATCHLIST);
+        if (empty($series))
+            return "Vous n'avez pas de whatchlist <br>";
+        foreach ($series as $serie) {
+            $html .= (new SerieRenderer($serie))->render(Renderer::COMPACT);
+        }
+        return $html;
+    }
 }
