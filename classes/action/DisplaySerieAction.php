@@ -68,6 +68,11 @@ class DisplaySerieAction extends Action {
 					<input type="submit" value="Envoyer">
 				</form>
 			</div>
+			
+			<!-- Affichage de la moyenne des notes -->
+			<div id="moyenne">
+				<p>Moyenne des notes : '.$serie->getNoteMoyenne().'</p>
+			</div>
 			';
         } else {
 	        $u = unserialize($_SESSION['user']);
