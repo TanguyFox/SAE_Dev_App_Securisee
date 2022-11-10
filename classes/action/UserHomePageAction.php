@@ -34,7 +34,9 @@ HTML;
     private function renderFavoris(mixed $user): string
     {
         $html = "";
-        $series = User::getSeriesList(genre: Serie::FAV);
+        $series = User::getSeriesList(genre: User::FAV);
+        if (empty($series))
+            return "Vous n'avez pas de favoris <br>";
         foreach ($series as $serie) {
             $html .= (new SerieRenderer($serie))->render(Renderer::COMPACT);
         }

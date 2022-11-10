@@ -89,21 +89,24 @@ const WATCHLIST = 'lVideoEnCours';
 		$st->execute([':user_id' => $_SESSION['user']->id, ':serie_id' => $id, ':commentaire' => $com]);
 	}
 
-    public static function getSeriesList($genre) : array{
+    public static function getSeriesList(string $genre) : array{
+        $user_id = self::getUserId();
         $sql = "SELECT list_id FROM user2list WHERE  user_id = :user_id AND nom_genre = :genre";
         $stmt = ConnexionFactory::makeConnection()->prepare($sql);
-        $stmt->execute(['genre' => $genre]);
+        $stmt->execute([$user_id,'genre' => $genre]);
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
-        $id_list = $result['list_id'];
+        if ($result)
+            $id_list = $result['list_id'];
+        else
+            return [];
         $sql = "SELECT serie_id FROM list2series WHERE list_id = :list_id";
         $stmt = ConnexionFactory::makeConnection()->prepare($sql);
         $stmt->execute(['list_id' => $id_list]);
-        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll();
         $series = [];
         foreach($result as $serie){
             $series[] = Serie::getSerieFromId($serie['serie_id']);
         }
         return $series;
     }
-
 }
