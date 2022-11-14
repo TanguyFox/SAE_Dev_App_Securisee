@@ -73,8 +73,8 @@ class User
     public function updateInfos(): void
     {
         $db = ConnexionFactory::makeConnection();
-        $st = $db->prepare("UPDATE utilisateur SET nom=?, prenom=?, genre_pref=?");
-        $st->execute([$this->nom, $this->prenom, $this->genre_pref]);
+        $st = $db->prepare("UPDATE utilisateur SET nom=?, prenom=?, genre_pref=? WHERE id = ?");
+        $st->execute([$this->nom, $this->prenom, $this->genre_pref, $this->getIdFromDb()]);
     }
 
 
