@@ -11,9 +11,9 @@
 | 5. Affichage/visionnage d’un épisode d’une série                                                              | Maxime        | ok       |
 | 6. Ajout d’une série dans la liste de préférence d’un utilisateur                                             | Elian         | ok       |
 | 7. Page d’accueil d’un utilisateur : afficher ses séries préférées                                            | Elian         | ok       |
-| 8. Lors du visionnage d’un épisode, ajouter automatiquement la série à la liste « en cours » de l’utilisateur | Maxime        | En cours |
+| 8. Lors du visionnage d’un épisode, ajouter automatiquement la série à la liste « en cours » de l’utilisateur | Maxime        | ok       |
 | 9. Lors du visionnage d’un épisode d’une série, noter et commenter la série                                   | Jules, Maxime | ok       |
-| 10. Lors de l’affichage d’une série, indiquer sa note moyenne et donner accès aux commentaires                | Tanguy, Jules | ok       |
+| 10. Lors de l’affichage d’une série, indiquer sa note moyenne et donner accès aux commentaires                | Tanguy, Jules | En cours |
 
 ## Fonctionnalités étendues :
 | Fonctionnalité                                                                                               | Auteur       | Statut   |
