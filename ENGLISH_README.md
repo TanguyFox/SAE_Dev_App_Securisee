@@ -94,5 +94,6 @@ In the "Accueil" page, you can see the list of your favorite series and your wat
 
 So you can click on the "Mon compte" button to access your account page.  
 On this page you can put your name, your first name and your favorite genre.  
+You can click on the scrallbar to change your favorite genre.
 
 If you have finished to use the application, you can click on the "Déconnexion" button to log out.
