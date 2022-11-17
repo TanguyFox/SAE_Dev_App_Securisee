@@ -20,9 +20,8 @@ class Auth
         $st = $db->prepare( "SELECT * FROM utilisateur WHERE email = ?");
         $st->execute([$email]);
         $u = $st->fetch(\PDO::FETCH_ASSOC);
-	    if (!$u) throw new UserException(" Il semblerait que vous n'avez pas de compte chez nous");
-        if(!password_verify($pwd, $u['password'])) {
-            throw new AuthException("Mot de passe ou email incorrect.");
+	    if (!$u or !password_verify($pwd, $u['password'])){
+            throw new AuthException("Identifiants ou mot de passe incorrect.");
 	    }
         if (! isset($u['genre_pref']))
             $u['genre_pref'] = "Aucun";
