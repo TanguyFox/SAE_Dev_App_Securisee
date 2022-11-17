@@ -49,7 +49,8 @@ HTML;
         $series = $user->getSeriesList(genre: User::FAV);
         if (empty($series))
             return "Vous n'avez pas de favoris <br>";
-        $html .= (new CatalogueRenderer($series))->render(Renderer::COMPACT);
+        foreach ($series as $fav)
+        $html .= (new SerieRenderer($fav))->render(1);
         return $html;
     }
 
@@ -60,7 +61,8 @@ HTML;
         $series = $user->getSeriesList(genre: User::WATCHLIST);
         if (empty($series))
             return "Vous n'avez pas de whatchlist <br>";
-        $html .= (new CatalogueRenderer($series))->render(Renderer::COMPACT);
+        foreach ($series as $watch)
+        $html .= (new SerieRenderer($watch))->render(Renderer::COMPACT);
         return $html;
     }
 }
