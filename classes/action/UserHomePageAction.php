@@ -50,7 +50,7 @@ HTML;
         if (empty($series))
             return "Vous n'avez pas de favoris <br>";
         foreach ($series as $fav)
-        $html .= (new SerieRenderer($fav))->render(1);
+        $html .= (new CatalogueRenderer($fav))->render(1);
         return $html;
     }
 
@@ -62,7 +62,7 @@ HTML;
         if (empty($series))
             return "Vous n'avez pas de whatchlist <br>";
         foreach ($series as $watch)
-        $html .= (new SerieRenderer($watch))->render(Renderer::COMPACT);
+        $html .= (new CatalogueRenderer($watch))->render(Renderer::COMPACT);
         return $html;
     }
 }
