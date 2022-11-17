@@ -63,7 +63,7 @@ class User
         $st = $db->prepare("INSERT INTO list2series (list_id, serie_id) VALUES (:list_id, :serie_id)");
         try {
             $st->execute(['list_id' => $list_id, 'serie_id' => $serie_id]);
-            header('Location: ?action=accueil-catalogue');
+            header('Location: ?action=accueil-catalogue&success=added');
         } catch (PDOException $e) {
             header('Location: ?action=accueil-catalogue&error=alreadyInList');
         }

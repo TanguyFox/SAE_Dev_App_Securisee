@@ -8,8 +8,10 @@ class CatalogueRenderer implements Renderer
 {
 
     private array $series;
-    public function __construct(){
-        $this->series = Catalogue::getSeries();
+    public function __construct(array $series = []){
+        $this->series = $series;
+        if (empty($series))
+            $this->series = Catalogue::getSeries();
     }
 
     public function render(int $selector): string
